@@ -755,22 +755,23 @@
   // ==========================================
   // 5. ERLC API
   // ==========================================
-  async function erlcFetch(path, options = {}) {
-    if (!ERLC_SERVER_KEY) throw new Error('ERLC_SERVER_KEY is not set in the config.');
-    const res = await fetch(`https://api.erlc.gg${path}`, {
-      ...options,
-      headers: {
-        'server-key': ERLC_SERVER_KEY,
-        'Content-Type': 'application/json',
-        ...(options.headers || {})
-      }
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error(`ERLC API ${res.status}: ${text}`);
-    }
-    return res.json();
+async function erlcFetch(path, options = {}) {
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/erlc-proxy`, {
+    method: options.method || "GET",
+    headers: {
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": "application/json",
+      "x-path": path,
+    },
+    body: options.body || undefined,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`ERLC Proxy ${res.status}: ${text}`);
   }
+  return res.json();
+}
 
   async function loadERLC() {
     const errEl = document.getElementById('erlc-error');
