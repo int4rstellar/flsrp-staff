@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Panel 〣 Florida State Roleplay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #030611;
+      color: #f2f3f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Blue Background Glows */
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 130, 255, 0.18) 0%, rgba(0,0,0,0) 70%);
+      top: -100px;
+      left: -100px;
+      z-index: 0;
+      pointer-events: none;
+      animation: float 12s ease-in-out infinite alternate;
+    }
+
+    .bg-glow-2 {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 130, 255, 0.12) 0%, rgba(0,0,0,0) 70%);
+      bottom: -100px;
+      right: -100px;
+      z-index: 0;
+      pointer-events: none;
+      animation: float 10s ease-in-out infinite alternate-reverse;
+    }
+
+    /* Main Container */
+    .app-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 130, 255, 0.25);
+      border-radius: 16px;
+      padding: 14px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 130, 255, 0.5);
+      overflow: hidden;
+      background: #000;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text strong {
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text span {
+      font-size: 0.7rem;
+      color: #0082ff;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-badge {
+      background: rgba(0, 130, 255, 0.12);
+      border: 1px solid rgba(0, 130, 255, 0.35);
+      color: #60a5fa;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-small {
+      background: rgba(3, 7, 18, 0.8);
+      border: 1px solid rgba(0, 130, 255, 0.25);
+      color: #94a3b8;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-small:hover {
+      border-color: #0082ff;
+      color: #ffffff;
+      background: rgba(0, 130, 255, 0.12);
+    }
+
+    /* Navigation */
+    .nav-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(10, 15, 30, 0.7);
+      border: 1px solid rgba(0, 130, 255, 0.2);
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #94a3b8;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: #ffffff;
+      background: rgba(0, 130, 255, 0.1);
+    }
+
+    .nav-btn.active {
+      background: rgba(0, 130, 255, 0.18);
+      border-color: rgba(0, 130, 255, 0.45);
+      color: #ffffff;
+    }
+
+    /* Content Card */
+    .card {
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 130, 255, 0.25);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(0, 130, 255, 0.2);
+      animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Login specific */
+    .login-card {
+      max-width: 480px;
+      margin: 60px auto 0;
+      text-align: center;
+    }
+
+    .icon-badge {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px auto;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 130, 255, 0.5);
+      box-shadow: 0 0 25px rgba(0, 130, 255, 0.4);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .icon-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #0082ff;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #e2e8f0;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(0, 130, 255, 0.18);
+      border: 1px solid rgba(0, 130, 255, 0.55);
+      border-radius: 12px;
+      padding: 13px 24px;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 130, 255, 0.2);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      border-color: #0082ff;
+      background: rgba(0, 130, 255, 0.32);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0, 130, 255, 0.38);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary.full {
+      width: 100%;
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #93c5fd;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .count-badge {
+      background: rgba(0, 130, 255, 0.15);
+      border: 1px solid rgba(0, 130, 255, 0.35);
+      color: #60a5fa;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+    }
+
+    select, input[type="text"], input[type="number"], textarea {
+      width: 100%;
+      background: #060b19;
+      border: 1px solid rgba(0, 130, 255, 0.3);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #f2f3f5;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: #0082ff;
+      box-shadow: 0 0 0 3px rgba(0, 130, 255, 0.18);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-add {
+      background: rgba(0, 130, 255, 0.2);
+      border: 1px solid rgba(0, 130, 255, 0.5);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add:hover:not(:disabled) {
+      background: rgba(0, 130, 255, 0.35);
+      border-color: #0082ff;
+    }
+
+    .btn-add:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Pills */
+    .selected-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      min-height: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 130, 255, 0.2);
+      border: 1px solid rgba(0, 130, 255, 0.5);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .pill button {
+      background: none;
+      border: none;
+      color: #93c5fd;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .pill button:hover {
+      color: #ff6b6b;
+    }
+
+    /* Grid helpers */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .nav-bar { justify-content: center; }
+    }
+
+    /* Modules / Cards inside */
+    .module {
+      background: rgba(3, 7, 18, 0.8);
+      border: 1px solid rgba(0, 130, 255, 0.2);
+      border-left: 3px solid #0082ff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .module h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #93c5fd;
+      margin-bottom: 10px;
+    }
+
+    .script-quote {
+      background: rgba(10, 15, 30, 0.9);
+      border: 1px solid rgba(0, 130, 255, 0.15);
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #0082ff;
+      cursor: pointer;
+    }
+
+    /* Session header */
+    .session-header {
+      background: rgba(0, 130, 255, 0.1);
+      border: 1px solid rgba(0, 130, 255, 0.3);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      text-align: left;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.86rem;
+    }
+
+    .session-header strong { color: #60a5fa; }
+
+    /* Player result card */
+    .player-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: rgba(3, 7, 18, 0.75);
+      border: 1px solid rgba(0, 130, 255, 0.22);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .player-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 16px;
+      border: 2px solid rgba(0, 130, 255, 0.4);
+      background: #000;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .player-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .player-meta h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .player-meta .username {
+      color: #60a5fa;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .meta-chip {
+      background: rgba(0, 130, 255, 0.12);
+      border: 1px solid rgba(0, 130, 255, 0.3);
+      color: #93c5fd;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 130, 255, 0.2);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 14px;
+      background: rgba(0, 130, 255, 0.1);
+      color: #93c5fd;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-top: 1px solid rgba(0, 130, 255, 0.1);
+      color: #cbd5e1;
+    }
+
+    tr:hover td {
+      background: rgba(0, 130, 255, 0.05);
+    }
+
+    /* Status messages */
+    .error-msg {
+      color: #ff6b6b;
+      font-size: 0.84rem;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .success-msg {
+      color: #4ade80;
+      font-size: 0.84rem;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .status-text {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    /* Welcome banner */
+    #welcome-banner {
+      display: none;
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, #ffffff, #0082ff, #93c5fd, #ffffff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1rem;
+      background-color: #0082ff;
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+
+    /* Views */
+    .view-section {
+      display: none;
+      animation: fadeSlideUp 0.4s ease-out forwards;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #64748b;
+    }
+
+    .empty-state p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+
+    /* Quick actions */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .quick-card {
+      background: rgba(3, 7, 18, 0.7);
+      border: 1px solid rgba(0, 130, 255, 0.2);
+      border-radius: 12px;
+      padding: 18px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quick-card:hover {
+      border-color: rgba(0, 130, 255, 0.5);
+      background: rgba(0, 130, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .quick-card strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      color: #e2e8f0;
+    }
+
+    .quick-card span {
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    /* Animations */
+    @keyframes scaleUp {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(30px, 30px); }
+    }
+
+    /* Utility */
+    .hidden { display: none !important; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-20 { margin-top: 20px; }
+    .mb-8 { margin-bottom: 8px; }
+    .text-center { text-align: center; }
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <div class="bg-glow-2"></div>
+
+  <!-- ===================== LOGIN VIEW ===================== -->
+  <div id="login-view" class="app-container">
+    <div class="card login-card">
+      <div class="icon-badge">
+        <img src="https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png" alt="Florida State Roleplay Logo">
+      </div>
+      <div class="brand-sub">Florida State Roleplay</div>
+      <h1>Staff Panel</h1>
+      <p class="subtitle" id="login-status">Restricted Area. Please log in with Discord to verify your Staff credentials.</p>
+      <button id="login-btn" class="btn-primary full">Login with Discord</button>
+    </div>
+  </div>
+
+  <!-- ===================== MAIN APP (after login) ===================== -->
+  <div id="app-view" class="app-container hidden">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png" alt="Logo">
+        </div>
+        <div class="brand-text">
+          <strong>Staff Panel</strong>
+          <span>Florida State Roleplay</span>
+        </div>
+      </div>
+      <div class="user-info">
+        <span class="user-badge" id="user-rank-badge">Staff</span>
+        <span id="user-name-display" style="font-size:0.9rem;font-weight:600;">Instructor</span>
+        <button id="logout-btn" class="btn-small">Log Out</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-bar">
+      <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+      <button class="nav-btn" data-view="training">Training</button>
+      <button class="nav-btn" data-view="player">Player Lookup</button>
+      <button class="nav-btn" data-view="modlog">Moderation Log</button>
+      <button class="nav-btn" data-view="activity">Activity</button>
+    </div>
+
+    <!-- Content Card -->
+    <div class="card">
+      <!-- DASHBOARD -->
+      <div id="view-dashboard" class="view-section active">
+        <div id="welcome-banner"><span id="welcome-text"></span><span class="cursor"></span></div>
+        <p class="status-text">Select a tool below to manage staff training, look up players, or log moderation actions.</p>
+
+        <div class="quick-grid">
+          <div class="quick-card" data-goto="training">
+            <strong>Start Training</strong>
+            <span>New staff training session</span>
+          </div>
+          <div class="quick-card" data-goto="player">
+            <strong>Player Lookup</strong>
+            <span>Search Roblox users</span>
+          </div>
+          <div class="quick-card" data-goto="modlog">
+            <strong>Log Action</strong>
+            <span>Warn / Kick / Ban / Note</span>
+          </div>
+          <div class="quick-card" data-goto="activity">
+            <strong>View Activity</strong>
+            <span>Recent logs & sessions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRAINING -->
+      <div id="view-training" class="view-section">
+        <!-- Setup -->
+        <div id="training-setup">
+          <h2>Start New Training Session</h2>
+          <p class="subtitle" style="margin-bottom:18px;">Select the training type and add up to 4 trainees.</p>
+
+          <div class="form-group">
+            <label class="form-label" for="training-type-select">1. Select Training Type</label>
+            <select id="training-type-select"></select>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>2. Enter Trainee Discord Usernames</span>
+              <span class="count-badge" id="trainee-count">0 / 4 Added</span>
+            </div>
+            <div class="input-row">
+              <input type="text" id="trainee-input" placeholder="Type Discord username and press Enter..." autocomplete="off">
+              <button type="button" id="add-trainee-btn" class="btn-add">+ Add</button>
+            </div>
+            <div class="selected-pills" id="selected-pills"></div>
+            <p class="error-msg" id="setup-error"></p>
+          </div>
+
+          <div class="flex-between mt-16">
+            <button type="button" id="cancel-training-btn" class="btn-small">Back to Dashboard</button>
+            <button type="button" id="confirm-start-btn" class="btn-primary">Start New Session</button>
+          </div>
+        </div>
+
+        <!-- Active Guide -->
+        <div id="training-guide" class="hidden">
+          <div class="session-header" id="active-session-info"></div>
+
+          <div class="module">
+            <h3>Module 1: Introduction & Expectations</h3>
+            <div class="script-quote">
+              "Welcome to the Florida State RP Staff Team. Today we are going to walk through our core rules, moderation commands, and how to handle player reports professionally."
+            </div>
+            <label class="check-item"><input type="checkbox"> Verify trainee has read the Staff Handbook</label>
+            <label class="check-item"><input type="checkbox"> Confirm trainee has working microphone & recording software</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 2: Handling Reports & Sit Etiquette</h3>
+            <div class="script-quote">
+              "Always teleport to a private rooftop or sit area before pulling players. Listen to both sides without interrupting and ask for video clips before issuing punishments."
+            </div>
+            <label class="check-item"><input type="checkbox"> Explain verbal warnings vs. kicks vs. bans</label>
+            <label class="check-item"><input type="checkbox"> Review how to log punishments in Discord</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 3: Final Q&A & Sign-Off</h3>
+            <div class="script-quote">
+              "Do you have any questions about commands, SOPs, or escalation procedures before we finish your training?"
+            </div>
+            <label class="check-item"><input type="checkbox"> Answer trainee questions</label>
+            <label class="check-item"><input type="checkbox"> Update trainee roles in Discord</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 4: Moderation Commands & Tools</h3>
+            <div class="script-quote">
+              "Staff members must understand the available moderation commands and use them responsibly. Never use commands for personal reasons or outside your authority."
+            </div>
+            <label class="check-item"><input type="checkbox"> Demonstrate spectate and teleport commands</label>
+            <label class="check-item"><input type="checkbox"> Review warn, kick, and ban commands</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 5: Punishment Guidelines</h3>
+            <div class="script-quote">
+              "All punishments must be fair, reasonable, and supported by evidence. Staff members should follow the punishment guidelines and avoid unnecessary disciplinary actions."
+            </div>
+            <label class="check-item"><input type="checkbox"> Review punishment guidelines and severity levels</label>
+            <label class="check-item"><input type="checkbox"> Explain when to issue warnings, kicks, or bans</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 6: Discord Documentation & Logging</h3>
+            <div class="script-quote">
+              "Proper documentation is essential to maintaining accountability. All moderation actions must be recorded in the appropriate staff channels."
+            </div>
+            <label class="check-item"><input type="checkbox"> Demonstrate how to submit a moderation log</label>
+            <label class="check-item"><input type="checkbox"> Review incident reports and evidence submissions</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 7: Staff Conduct & Professionalism</h3>
+            <div class="script-quote">
+              "As a representative of FSRP, you are expected to maintain professionalism both in-game and in Discord. Your behavior reflects on the entire staff team."
+            </div>
+            <label class="check-item"><input type="checkbox"> Review staff conduct and professionalism expectations</label>
+            <label class="check-item"><input type="checkbox"> Explain conflicts of interest and permission abuse</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 8: Escalation Procedures & Teamwork</h3>
+            <div class="script-quote">
+              "Not every situation should be handled independently. Staff members must understand when to request assistance from Management or Administration."
+            </div>
+            <label class="check-item"><input type="checkbox"> Explain when to escalate a situation to higher staff</label>
+            <label class="check-item"><input type="checkbox"> Review staff communication and chain of command</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <div class="module">
+            <h3>Module 9: Scenario-Based Assessment</h3>
+            <div class="script-quote">
+              "You will now be presented with realistic moderation scenarios. Explain how you would handle each situation using FSRP policies and procedures."
+            </div>
+            <label class="check-item"><input type="checkbox"> Explain how to handle an RDM report</label>
+            <label class="check-item"><input type="checkbox"> Explain how to handle disrespect toward staff</label>
+            <label class="check-item"><input type="checkbox"> Explain what to do when witnessing staff misconduct</label>
+            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
+          </div>
+
+          <button type="button" id="end-session-btn" class="btn-primary full mt-16">Finish Session & Log Results</button>
+        </div>
+      </div>
+
+      <!-- PLAYER LOOKUP -->
+      <div id="view-player" class="view-section">
+        <h2>Roblox Player Lookup</h2>
+        <p class="subtitle">Search a player by Roblox username to view their profile, groups, and add staff notes.</p>
+
+        <div class="input-row">
+          <input type="text" id="player-search-input" placeholder="Enter Roblox username..." autocomplete="off">
+          <button type="button" id="player-search-btn" class="btn-add">Search</button>
+        </div>
+        <p class="error-msg" id="player-error"></p>
+        <p class="success-msg" id="player-success"></p>
+
+        <div id="player-result" class="hidden">
+          <div class="player-card">
+            <div class="player-avatar">
+              <img id="player-avatar-img" src="" alt="Avatar">
+            </div>
+            <div class="player-meta">
+              <h3 id="player-display-name">—</h3>
+              <div class="username" id="player-username">@username</div>
+              <div class="meta-row">
+                <span class="meta-chip" id="player-id-chip">ID: —</span>
+                <span class="meta-chip" id="player-created-chip">Joined: —</span>
+              </div>
+              <div class="meta-row" id="player-groups-row"></div>
+            </div>
+          </div>
+
+          <div class="mt-20">
+            <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Add Staff Note</h3>
+            <textarea id="note-input" placeholder="Write a note about this player..."></textarea>
+            <button type="button" id="save-note-btn" class="btn-primary mt-12">Save Note</button>
+          </div>
+
+          <div class="mt-20">
+            <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Previous Notes</h3>
+            <div id="notes-list">
+              <div class="empty-state"><p>No notes yet for this player.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODERATION LOG -->
+      <div id="view-modlog" class="view-section">
+        <h2>Log Moderation Action</h2>
+        <p class="subtitle">Record a warn, kick, ban, or note. This posts to Discord and saves to the database.</p>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Player Roblox Username</label>
+            <input type="text" id="mod-player-username" placeholder="Exact Roblox username">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Action Type</label>
+            <select id="mod-action">
+              <option value="warn">Verbal Warning</option>
+              <option value="kick">Kick</option>
+              <option value="ban">Ban</option>
+              <option value="softban">Softban / Tempban</option>
+              <option value="note">Staff Note Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Duration (optional)</label>
+          <input type="text" id="mod-duration" placeholder="e.g. 1 day, 7 days, Permanent">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Reason</label>
+          <textarea id="mod-reason" placeholder="Explain the reason and any evidence..."></textarea>
+        </div>
+
+        <p class="error-msg" id="mod-error"></p>
+        <p class="success-msg" id="mod-success"></p>
+
+        <button type="button" id="submit-mod-btn" class="btn-primary full mt-12">Submit Log</button>
+      </div>
+
+      <!-- ACTIVITY -->
+      <div id="view-activity" class="view-section">
+        <div class="flex-between mb-8">
+          <h2>Recent Activity</h2>
+          <button type="button" id="refresh-activity-btn" class="btn-small">Refresh</button>
+        </div>
+        <p class="subtitle">Latest moderation logs and training sessions.</p>
+
+        <div class="table-wrap mt-12">
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Details</th>
+                <th>Staff</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="activity-tbody">
+              <tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  // ==========================================
+  // 1. CONFIGURATION  ← EDIT THESE
+  // ==========================================
+  const SUPABASE_URL = 'https://nyrfvlyapwazukltdlsf.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_cVOlR7exe7ZuoaLKr0aOKA_a6Vv1dU7';
+  const GUILD_ID = '1428115068297412742';
+  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1572011826961457252/DiBuXlT3-CMoIP34Cy3mtpH3I5JownrR-VHszdMBqqhNHtMXslmwvpn63WjK6M_uXDCN';
+
+  // Optional: Your main Roblox group ID (shows rank if player is in it)
+  const ROBLOX_GROUP_ID = null; // e.g. 12345678
+
+  // Roblox API proxy (public). Alternatives: ff-roproxy.com, rotunnel.com
+  const RBX_PROXY = {
+    users: 'https://users.roproxy.com',
+    groups: 'https://groups.roproxy.com',
+    thumbnails: 'https://thumbnails.roproxy.com'
+  };
+
+  const TRAINING_TYPES = [
+    'Entry Moderator Training',
+    'Support Training'
+  ];
+
+  // Ordered from highest rank to lowest
+  const RANK_ROLES = [
+    { id: '1566965345904894042', name: 'Server Lead' },
+    { id: '1428115068494807345', name: 'Owner' },
+    { id: '1428115068494807344', name: 'Co Owner' },
+    { id: '1428115068494807343', name: 'Assistant Owner' },
+    { id: '1428115068477902969', name: 'Executive Director' },
+    { id: '1428115068477902968', name: 'Staff Executive' },
+    { id: '1428115068460994741', name: 'Community Executive' },
+    { id: '1428115068460994740', name: 'Trial Executive' }
+  ];
+
+  // ==========================================
+  // 2. APP STATE & CLIENT
+  // ==========================================
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let currentInstructor = { username: 'Instructor', rank: 'Staff', discordId: null };
+  let selectedTrainees = [];
+  let activeSessionType = '';
+  let currentPlayer = null; // { id, name, displayName }
+  const MAX_TRAINEES = 4;
+
+  // ==========================================
+  // 3. DOM REFERENCES
+  // ==========================================
+  const loginView = document.getElementById('login-view');
+  const appView = document.getElementById('app-view');
+  const loginStatus = document.getElementById('login-status');
+  const loginBtn = document.getElementById('login-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const userRankBadge = document.getElementById('user-rank-badge');
+  const userNameDisplay = document.getElementById('user-name-display');
+  const welcomeBanner = document.getElementById('welcome-banner');
+  const welcomeText = document.getElementById('welcome-text');
+
+  // ==========================================
+  // 4. VIEW MANAGEMENT
+  // ==========================================
+  function showView(viewName) {
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.view === viewName);
+    });
+    const target = document.getElementById(`view-${viewName}`);
+    if (target) target.classList.add('active');
+
+    // Reset training to setup when switching away and back
+    if (viewName === 'training') {
+      document.getElementById('training-setup').classList.remove('hidden');
+      document.getElementById('training-guide').classList.add('hidden');
+    }
+  }
+
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => showView(btn.dataset.view));
+  });
+
+  document.querySelectorAll('.quick-card').forEach(card => {
+    card.addEventListener('click', () => showView(card.dataset.goto));
+  });
+
+  // ==========================================
+  // 5. TRAINING LOGIC
+  // ==========================================
+  const trainingSelect = document.getElementById('training-type-select');
+  const traineeInput = document.getElementById('trainee-input');
+  const addTraineeBtn = document.getElementById('add-trainee-btn');
+  const selectedPills = document.getElementById('selected-pills');
+  const traineeCountBadge = document.getElementById('trainee-count');
+  const setupError = document.getElementById('setup-error');
+  const confirmStartBtn = document.getElementById('confirm-start-btn');
+  const activeSessionInfo = document.getElementById('active-session-info');
+
+  TRAINING_TYPES.forEach(type => {
+    const opt = document.createElement('option');
+    opt.value = type;
+    opt.textContent = type;
+    trainingSelect.appendChild(opt);
+  });
+
+  function renderTraineePills() {
+    traineeCountBadge.textContent = `${selectedTrainees.length} / ${MAX_TRAINEES} Added`;
+    addTraineeBtn.disabled = selectedTrainees.length >= MAX_TRAINEES;
+    traineeInput.disabled = selectedTrainees.length >= MAX_TRAINEES;
+    traineeInput.placeholder = selectedTrainees.length >= MAX_TRAINEES
+      ? 'Maximum of 4 trainees reached'
+      : 'Type Discord username and press Enter...';
+
+    selectedPills.innerHTML = '';
+    selectedTrainees.forEach(name => {
+      const pill = document.createElement('span');
+      pill.className = 'pill';
+      pill.innerHTML = `${name} <button type="button" title="Remove">&times;</button>`;
+      pill.querySelector('button').onclick = () => {
+        selectedTrainees = selectedTrainees.filter(t => t !== name);
+        setupError.style.display = 'none';
+        renderTraineePills();
+      };
+      selectedPills.appendChild(pill);
+    });
+  }
+
+  function handleAddTrainee() {
+    setupError.style.display = 'none';
+    const rawName = traineeInput.value.trim().replace(/^@/, '');
+    if (!rawName) return;
+
+    if (selectedTrainees.length >= MAX_TRAINEES) {
+      setupError.textContent = `You can only add up to ${MAX_TRAINEES} trainees per session.`;
+      setupError.style.display = 'block';
+      return;
+    }
+    if (selectedTrainees.some(t => t.toLowerCase() === rawName.toLowerCase())) {
+      setupError.textContent = `"${rawName}" is already added.`;
+      setupError.style.display = 'block';
+      return;
+    }
+
+    selectedTrainees.push(rawName);
+    traineeInput.value = '';
+    renderTraineePills();
+  }
+
+  addTraineeBtn.onclick = handleAddTrainee;
+  traineeInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleAddTrainee();
+    }
+  });
+
+  document.getElementById('cancel-training-btn').onclick = () => showView('dashboard');
+
+  // Start session
+  confirmStartBtn.onclick = async () => {
+    if (traineeInput.value.trim() && selectedTrainees.length < MAX_TRAINEES) {
+      handleAddTrainee();
+    }
+    if (selectedTrainees.length === 0) {
+      setupError.textContent = 'Please enter at least 1 trainee username.';
+      setupError.style.display = 'block';
+      return;
+    }
+
+    const selectedType = trainingSelect.value;
+    confirmStartBtn.disabled = true;
+    confirmStartBtn.textContent = 'Starting...';
+    setupError.style.display = 'none';
+
+    const payload = {
+      username: 'FSRP Staff Training Logs',
+      avatar_url: 'https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png',
+      embeds: [{
+        title: '📋 New Staff Training Session Started',
+        color: 33535,
+        fields: [
+          { name: 'Training Instructor', value: `**${currentInstructor.rank}** — \`${currentInstructor.username}\``, inline: true },
+          { name: 'Training Type', value: selectedType, inline: true },
+          { name: `Trainees (${selectedTrainees.length}/${MAX_TRAINEES})`, value: selectedTrainees.map((t, i) => `${i + 1}. \`${t}\``).join('\n'), inline: false }
+        ],
+        footer: { text: 'Florida State Roleplay • Staff Panel' },
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error(`Webhook ${res.status}`);
+
+      activeSessionType = selectedType;
+      activeSessionInfo.innerHTML = `
+        <div><strong>Training:</strong> ${selectedType}</div>
+        <div><strong>Instructor:</strong> ${currentInstructor.rank} ${currentInstructor.username}</div>
+        <div style="width:100%;"><strong>Trainees:</strong> ${selectedTrainees.join(', ')}</div>
+      `;
+
+      document.getElementById('training-setup').classList.add('hidden');
+      document.getElementById('training-guide').classList.remove('hidden');
+    } catch (err) {
+      console.error(err);
+      setupError.textContent = 'Failed to send session log. Please try again.';
+      setupError.style.display = 'block';
+    } finally {
+      confirmStartBtn.disabled = false;
+      confirmStartBtn.textContent = 'Start New Session';
+    }
+  };
+
+  // End session
+  document.getElementById('end-session-btn').onclick = async () => {
+    const endBtn = document.getElementById('end-session-btn');
+    endBtn.disabled = true;
+    endBtn.textContent = 'Logging results...';
+
+    const checklistItems = [];
+    document.querySelectorAll('#training-guide .check-item').forEach(label => {
+      const cb = label.querySelector('input[type="checkbox"]');
+      checklistItems.push({ text: label.textContent.trim(), checked: !!(cb && cb.checked) });
+    });
+
+    const completedCount = checklistItems.filter(i => i.checked).length;
+    const totalCount = checklistItems.length;
+    const allComplete = completedCount === totalCount && totalCount > 0;
+    const checklistValue = checklistItems.length === 0
+      ? '_No checklist items_'
+      : checklistItems.map(i => `${i.checked ? '✅' : '❌'} ${i.text}`).join('\n');
+
+    // Discord webhook
+    const payload = {
+      username: 'FSRP Staff Training Logs',
+      avatar_url: 'https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png',
+      embeds: [{
+        title: allComplete ? '✅ Staff Training Session Completed' : '📋 Staff Training Session Finished',
+        color: allComplete ? 5763719 : 16753920,
+        fields: [
+          { name: 'Training Instructor', value: `**${currentInstructor.rank}** — \`${currentInstructor.username}\``, inline: true },
+          { name: 'Training Type', value: activeSessionType || '—', inline: true },
+          { name: 'Completion', value: `**${completedCount} / ${totalCount}** checklist items`, inline: true },
+          { name: `Trainees (${selectedTrainees.length})`, value: selectedTrainees.length ? selectedTrainees.map((t, i) => `${i + 1}. \`${t}\``).join('\n') : '_None_', inline: false },
+          { name: 'Checklist Results', value: checklistValue, inline: false }
+        ],
+        footer: { text: 'Florida State Roleplay • Staff Panel' },
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Save to Supabase
+    try {
+      await supabase.from('training_sessions').insert({
+        instructor_discord_id: currentInstructor.discordId,
+        instructor_username: currentInstructor.username,
+        instructor_rank: currentInstructor.rank,
+        training_type: activeSessionType,
+        trainees: selectedTrainees,
+        checklist: checklistItems,
+        completed_count: completedCount,
+        total_count: totalCount
+      });
+    } catch (err) {
+      console.error('Supabase training insert failed', err);
+    }
+
+    // Reset
+    document.querySelectorAll('#training-guide input[type="checkbox"]').forEach(cb => cb.checked = false);
+    activeSessionType = '';
+    selectedTrainees = [];
+    renderTraineePills();
+    endBtn.disabled = false;
+    endBtn.textContent = 'Finish Session & Log Results';
+    document.getElementById('training-guide').classList.add('hidden');
+    document.getElementById('training-setup').classList.remove('hidden');
+    showView('dashboard');
+  };
+
+  // ==========================================
+  // 6. ROBLOX PLAYER LOOKUP
+  // ==========================================
+  const playerSearchInput = document.getElementById('player-search-input');
+  const playerSearchBtn = document.getElementById('player-search-btn');
+  const playerError = document.getElementById('player-error');
+  const playerSuccess = document.getElementById('player-success');
+  const playerResult = document.getElementById('player-result');
+
+  async function searchPlayer() {
+    const username = playerSearchInput.value.trim();
+    playerError.style.display = 'none';
+    playerSuccess.style.display = 'none';
+    playerResult.classList.add('hidden');
+    currentPlayer = null;
+
+    if (!username) {
+      playerError.textContent = 'Enter a Roblox username.';
+      playerError.style.display = 'block';
+      return;
+    }
+
+    playerSearchBtn.disabled = true;
+    playerSearchBtn.textContent = 'Searching...';
+
+    try {
+      // Username → ID
+      const lookupRes = await fetch(`${RBX_PROXY.users}/v1/usernames/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usernames: [username], excludeBannedUsers: false })
+      });
+      const lookupData = await lookupRes.json();
+      if (!lookupData.data || lookupData.data.length === 0) {
+        throw new Error('User not found.');
+      }
+
+      const user = lookupData.data[0];
+      const userId = user.id;
+
+      // Full user info
+      const infoRes = await fetch(`${RBX_PROXY.users}/v1/users/${userId}`);
+      const info = await infoRes.json();
+
+      // Avatar
+      let avatarUrl = '';
+      try {
+        const thumbRes = await fetch(`${RBX_PROXY.thumbnails}/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=false`);
+        const thumbData = await thumbRes.json();
+        if (thumbData.data && thumbData.data[0]) {
+          avatarUrl = thumbData.data[0].imageUrl;
+        }
+      } catch (_) {}
+
+      // Groups
+      let groupsHtml = '';
+      try {
+        const groupsRes = await fetch(`${RBX_PROXY.groups}/v1/users/${userId}/groups/roles`);
+        const groupsData = await groupsRes.json();
+        if (groupsData.data && groupsData.data.length) {
+          const relevant = ROBLOX_GROUP_ID
+            ? groupsData.data.filter(g => g.group.id === ROBLOX_GROUP_ID)
+            : groupsData.data.slice(0, 6);
+
+          groupsHtml = relevant.map(g => {
+            const isMain = ROBLOX_GROUP_ID && g.group.id === ROBLOX_GROUP_ID;
+            return `<span class="meta-chip" style="${isMain ? 'border-color:#0082ff;color:#60a5fa;' : ''}">${g.group.name} — ${g.role.name}</span>`;
+          }).join('');
+        }
+      } catch (_) {}
+
+      currentPlayer = {
+        id: userId,
+        name: info.name || user.name,
+        displayName: info.displayName || user.displayName
+      };
+
+      document.getElementById('player-avatar-img').src = avatarUrl || 'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-00000000000000000000000000000000-Png/150/150/AvatarHeadshot/Png/noFilter';
+      document.getElementById('player-display-name').textContent = currentPlayer.displayName;
+      document.getElementById('player-username').textContent = `@${currentPlayer.name}`;
+      document.getElementById('player-id-chip').textContent = `ID: ${userId}`;
+      document.getElementById('player-created-chip').textContent = `Joined: ${info.created ? new Date(info.created).toLocaleDateString() : '—'}`;
+      document.getElementById('player-groups-row').innerHTML = groupsHtml || '<span class="meta-chip">No groups found</span>';
+
+      playerResult.classList.remove('hidden');
+      loadPlayerNotes(userId);
+    } catch (err) {
+      console.error(err);
+      playerError.textContent = err.message || 'Failed to look up player. Try again or check the username.';
+      playerError.style.display = 'block';
+    } finally {
+      playerSearchBtn.disabled = false;
+      playerSearchBtn.textContent = 'Search';
+    }
+  }
+
+  playerSearchBtn.onclick = searchPlayer;
+  playerSearchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      searchPlayer();
+    }
+  });
+
+  // Notes
+  async function loadPlayerNotes(robloxId) {
+    const list = document.getElementById('notes-list');
+    list.innerHTML = '<div class="empty-state"><p>Loading notes...</p></div>';
+
+    try {
+      const { data, error } = await supabase
+        .from('player_notes')
+        .select('*')
+        .eq('player_roblox_id', robloxId)
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        list.innerHTML = '<div class="empty-state"><p>No notes yet for this player.</p></div>';
+        return;
+      }
+
+      list.innerHTML = data.map(n => `
+        <div class="module" style="margin-bottom:10px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <strong style="color:#93c5fd;font-size:0.85rem;">${n.author_username || 'Staff'}</strong>
+            <span style="font-size:0.75rem;color:#64748b;">${new Date(n.created_at).toLocaleString()}</span>
+          </div>
+          <p style="font-size:0.9rem;color:#e2e8f0;line-height:1.45;">${escapeHtml(n.note)}</p>
+        </div>
+      `).join('');
+    } catch (err) {
+      console.error(err);
+      list.innerHTML = '<div class="empty-state"><p>Could not load notes.</p></div>';
+    }
+  }
+
+  document.getElementById('save-note-btn').onclick = async () => {
+    const noteText = document.getElementById('note-input').value.trim();
+    playerError.style.display = 'none';
+    playerSuccess.style.display = 'none';
+
+    if (!currentPlayer) {
+      playerError.textContent = 'Search a player first.';
+      playerError.style.display = 'block';
+      return;
+    }
+    if (!noteText) {
+      playerError.textContent = 'Note cannot be empty.';
+      playerError.style.display = 'block';
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('player_notes').insert({
+        player_roblox_id: currentPlayer.id,
+        player_username: currentPlayer.name,
+        note: noteText,
+        author_discord_id: currentInstructor.discordId,
+        author_username: currentInstructor.username
+      });
+      if (error) throw error;
+
+      document.getElementById('note-input').value = '';
+      playerSuccess.textContent = 'Note saved.';
+      playerSuccess.style.display = 'block';
+      loadPlayerNotes(currentPlayer.id);
+    } catch (err) {
+      console.error(err);
+      playerError.textContent = 'Failed to save note.';
+      playerError.style.display = 'block';
+    }
+  };
+
+  // ==========================================
+  // 7. MODERATION LOG
+  // ==========================================
+  document.getElementById('submit-mod-btn').onclick = async () => {
+    const username = document.getElementById('mod-player-username').value.trim();
+    const action = document.getElementById('mod-action').value;
+    const duration = document.getElementById('mod-duration').value.trim();
+    const reason = document.getElementById('mod-reason').value.trim();
+    const modError = document.getElementById('mod-error');
+    const modSuccess = document.getElementById('mod-success');
+    const submitBtn = document.getElementById('submit-mod-btn');
+
+    modError.style.display = 'none';
+    modSuccess.style.display = 'none';
+
+    if (!username || !reason) {
+      modError.textContent = 'Player username and reason are required.';
+      modError.style.display = 'block';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    let robloxId = null;
+    try {
+      const lookupRes = await fetch(`${RBX_PROXY.users}/v1/usernames/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usernames: [username], excludeBannedUsers: false })
+      });
+      const lookupData = await lookupRes.json();
+      if (lookupData.data && lookupData.data[0]) {
+        robloxId = lookupData.data[0].id;
+      }
+    } catch (_) {}
+
+    // Discord webhook
+    const colorMap = { warn: 16776960, kick: 16753920, ban: 15548997, softban: 15105570, note: 5793266 };
+    const payload = {
+      username: 'FSRP Moderation Logs',
+      avatar_url: 'https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png',
+      embeds: [{
+        title: `🛡️ ${action.toUpperCase()} logged`,
+        color: colorMap[action] || 33535,
+        fields: [
+          { name: 'Player', value: `\`${username}\`${robloxId ? ` (ID: ${robloxId})` : ''}`, inline: true },
+          { name: 'Action', value: action, inline: true },
+          { name: 'Duration', value: duration || '—', inline: true },
+          { name: 'Staff', value: `**${currentInstructor.rank}** — \`${currentInstructor.username}\``, inline: false },
+          { name: 'Reason', value: reason, inline: false }
+        ],
+        footer: { text: 'Florida State Roleplay • Staff Panel' },
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error('Webhook failed', err);
+    }
+
+    // Supabase
+    try {
+      await supabase.from('mod_logs').insert({
+        instructor_discord_id: currentInstructor.discordId,
+        instructor_username: currentInstructor.username,
+        instructor_rank: currentInstructor.rank,
+        player_roblox_id: robloxId,
+        player_username: username,
+        action,
+        reason,
+        duration: duration || null
+      });
+    } catch (err) {
+      console.error('Supabase mod log failed', err);
+    }
+
+    modSuccess.textContent = 'Action logged successfully.';
+    modSuccess.style.display = 'block';
+    document.getElementById('mod-player-username').value = '';
+    document.getElementById('mod-duration').value = '';
+    document.getElementById('mod-reason').value = '';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Log';
+  };
+
+  // ==========================================
+  // 8. ACTIVITY FEED
+  // ==========================================
+  async function loadActivity() {
+    const tbody = document.getElementById('activity-tbody');
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">Loading...</td></tr>';
+
+    try {
+      const [mods, trains] = await Promise.all([
+        supabase.from('mod_logs').select('*').order('created_at', { ascending: false }).limit(25),
+        supabase.from('training_sessions').select('*').order('created_at', { ascending: false }).limit(15)
+      ]);
+
+      const rows = [];
+
+      (mods.data || []).forEach(m => {
+        rows.push({
+          type: m.action.toUpperCase(),
+          details: `<strong>${escapeHtml(m.player_username || 'Unknown')}</strong> — ${escapeHtml(m.reason || '').slice(0, 80)}${(m.reason || '').length > 80 ? '…' : ''}`,
+          staff: `${m.instructor_rank || ''} ${m.instructor_username || ''}`,
+          time: new Date(m.created_at).toLocaleString(),
+          ts: new Date(m.created_at).getTime()
+        });
+      });
+
+      (trains.data || []).forEach(t => {
+        rows.push({
+          type: 'TRAINING',
+          details: `${escapeHtml(t.training_type || 'Session')} — ${(t.trainees || []).join(', ')}`,
+          staff: `${t.instructor_rank || ''} ${t.instructor_username || ''}`,
+          time: new Date(t.created_at).toLocaleString(),
+          ts: new Date(t.created_at).getTime()
+        });
+      });
+
+      rows.sort((a, b) => b.ts - a.ts);
+
+      if (rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">No activity yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = rows.slice(0, 30).map(r => `
+        <tr>
+          <td><span class="meta-chip">${r.type}</span></td>
+          <td>${r.details}</td>
+          <td>${escapeHtml(r.staff)}</td>
+          <td style="white-space:nowrap;font-size:0.8rem;color:#94a3b8;">${r.time}</td>
+        </tr>
+      `).join('');
+    } catch (err) {
+      console.error(err);
+      tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#ff6b6b;">Failed to load activity.</td></tr>';
+    }
+  }
+
+  document.getElementById('refresh-activity-btn').onclick = loadActivity;
+
+  // Auto-load when switching to activity
+  const origShowView = showView;
+  showView = function(viewName) {
+    origShowView(viewName);
+    if (viewName === 'activity') loadActivity();
+  };
+
+  // ==========================================
+  // 9. AUTH
+  // ==========================================
+  function typeWelcomeMessage(fullMessage) {
+    welcomeBanner.style.display = 'block';
+    welcomeText.textContent = '';
+    let index = 0;
+    const timer = setInterval(() => {
+      welcomeText.textContent += fullMessage.charAt(index);
+      index++;
+      if (index >= fullMessage.length) clearInterval(timer);
+    }, 40);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  loginBtn.onclick = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'discord',
+      options: {
+        scopes: 'guilds.members.read identify',
+        redirectTo: window.location.origin + window.location.pathname
+      }
+    });
+  };
+
+  logoutBtn.onclick = async () => {
+    await supabase.auth.signOut();
+    localStorage.clear();
+    window.location.href = window.location.origin + window.location.pathname;
+  };
+
+  // Check session on load
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (session) {
+    if (!session.provider_token) {
+      await supabase.auth.signOut();
+      loginStatus.innerText = 'Your session expired. Please log in with Discord again.';
+    } else {
+      loginStatus.innerText = 'Verifying your Staff credentials...';
+
+      try {
+        const res = await fetch(`https://discord.com/api/users/@me/guilds/${GUILD_ID}/member`, {
+          headers: { Authorization: `Bearer ${session.provider_token}` }
+        });
+
+        if (res.ok) {
+          const member = await res.json();
+          const matchedRank = RANK_ROLES.find(rank => member.roles.includes(rank.id));
+
+          if (matchedRank) {
+            const discordUsername = member.user?.username || member.nick || 'Instructor';
+            currentInstructor = {
+              username: discordUsername,
+              rank: matchedRank.name,
+              discordId: member.user?.id || session.user?.id
+            };
+
+            // Show app
+            loginView.classList.add('hidden');
+            appView.classList.remove('hidden');
+            userRankBadge.textContent = matchedRank.name;
+            userNameDisplay.textContent = discordUsername;
+            typeWelcomeMessage(`Welcome, ${matchedRank.name} ${discordUsername}`);
+          } else {
+            loginStatus.innerText = 'Access Denied: This panel is restricted to Staff Instructors only.';
+          }
+        } else {
+          loginStatus.innerText = 'Access Denied: You must be in the Florida State Roleplay Discord server.';
+        }
+      } catch (err) {
+        console.error(err);
+        loginStatus.innerText = 'Could not verify Discord membership. Please try again.';
+      }
+    }
+  }
+</script>
+</body>
+</html>
