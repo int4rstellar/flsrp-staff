@@ -313,15 +313,6 @@
       letter-spacing: 0.05em;
     }
 
-    .count-badge {
-      background: rgba(0, 130, 255, 0.15);
-      border: 1px solid rgba(0, 130, 255, 0.35);
-      color: #60a5fa;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.72rem;
-    }
-
     select, input[type="text"], input[type="number"], textarea {
       width: 100%;
       background: #060b19;
@@ -374,43 +365,6 @@
       cursor: not-allowed;
     }
 
-    /* Pills */
-    .selected-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-      min-height: 10px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0, 130, 255, 0.2);
-      border: 1px solid rgba(0, 130, 255, 0.5);
-      color: #ffffff;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .pill button {
-      background: none;
-      border: none;
-      color: #93c5fd;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0;
-    }
-
-    .pill button:hover {
-      color: #ff6b6b;
-    }
-
     /* Grid helpers */
     .grid-2 {
       display: grid;
@@ -433,59 +387,6 @@
       margin-bottom: 14px;
       text-align: left;
     }
-
-    .module h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #93c5fd;
-      margin-bottom: 10px;
-    }
-
-    .script-quote {
-      background: rgba(10, 15, 30, 0.9);
-      border: 1px solid rgba(0, 130, 255, 0.15);
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-style: italic;
-      font-size: 0.9rem;
-      color: #e2e8f0;
-      line-height: 1.55;
-      margin-bottom: 12px;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 8px 0;
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      cursor: pointer;
-    }
-
-    .check-item input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: #0082ff;
-      cursor: pointer;
-    }
-
-    /* Session header */
-    .session-header {
-      background: rgba(0, 130, 255, 0.1);
-      border: 1px solid rgba(0, 130, 255, 0.3);
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 18px;
-      text-align: left;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 0.86rem;
-    }
-
-    .session-header strong { color: #60a5fa; }
 
     /* Player result card */
     .player-card {
@@ -762,7 +663,6 @@
     <!-- Navigation -->
     <div class="nav-bar">
       <button class="nav-btn active" data-view="dashboard">Dashboard</button>
-      <button class="nav-btn" data-view="training">Training</button>
       <button class="nav-btn" data-view="player">Player Lookup</button>
       <button class="nav-btn" data-view="modlog">Moderation Log</button>
       <button class="nav-btn" data-view="activity">Activity</button>
@@ -773,13 +673,9 @@
       <!-- DASHBOARD -->
       <div id="view-dashboard" class="view-section active">
         <div id="welcome-banner"><span id="welcome-text"></span><span class="cursor"></span></div>
-        <p class="status-text">Select a tool below to manage staff training, look up players, or log moderation actions.</p>
+        <p class="status-text">Select a tool below to look up players or log moderation actions.</p>
 
         <div class="quick-grid">
-          <div class="quick-card" data-goto="training">
-            <strong>Start Training</strong>
-            <span>New staff training session</span>
-          </div>
           <div class="quick-card" data-goto="player">
             <strong>Player Lookup</strong>
             <span>Search Roblox users</span>
@@ -790,138 +686,8 @@
           </div>
           <div class="quick-card" data-goto="activity">
             <strong>View Activity</strong>
-            <span>Recent logs & sessions</span>
+            <span>Recent moderation logs</span>
           </div>
-        </div>
-      </div>
-
-      <!-- TRAINING -->
-      <div id="view-training" class="view-section">
-        <!-- Setup -->
-        <div id="training-setup">
-          <h2>Start New Training Session</h2>
-          <p class="subtitle" style="margin-bottom:18px;">Select the training type and add up to 4 trainees.</p>
-
-          <div class="form-group">
-            <label class="form-label" for="training-type-select">1. Select Training Type</label>
-            <select id="training-type-select"></select>
-          </div>
-
-          <div class="form-group">
-            <div class="form-label">
-              <span>2. Enter Trainee Discord Usernames</span>
-              <span class="count-badge" id="trainee-count">0 / 4 Added</span>
-            </div>
-            <div class="input-row">
-              <input type="text" id="trainee-input" placeholder="Type Discord username and press Enter..." autocomplete="off">
-              <button type="button" id="add-trainee-btn" class="btn-add">+ Add</button>
-            </div>
-            <div class="selected-pills" id="selected-pills"></div>
-            <p class="error-msg" id="setup-error"></p>
-          </div>
-
-          <div class="flex-between mt-16">
-            <button type="button" id="cancel-training-btn" class="btn-small">Back to Dashboard</button>
-            <button type="button" id="confirm-start-btn" class="btn-primary">Start New Session</button>
-          </div>
-        </div>
-
-        <!-- Active Guide -->
-        <div id="training-guide" class="hidden">
-          <div class="session-header" id="active-session-info"></div>
-
-          <div class="module">
-            <h3>Module 1: Introduction & Expectations</h3>
-            <div class="script-quote">
-              "Welcome to the Florida State RP Staff Team. Today we are going to walk through our core rules, moderation commands, and how to handle player reports professionally."
-            </div>
-            <label class="check-item"><input type="checkbox"> Verify trainee has read the Staff Handbook</label>
-            <label class="check-item"><input type="checkbox"> Confirm trainee has working microphone & recording software</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 2: Handling Reports & Sit Etiquette</h3>
-            <div class="script-quote">
-              "Always teleport to a private rooftop or sit area before pulling players. Listen to both sides without interrupting and ask for video clips before issuing punishments."
-            </div>
-            <label class="check-item"><input type="checkbox"> Explain verbal warnings vs. kicks vs. bans</label>
-            <label class="check-item"><input type="checkbox"> Review how to log punishments in Discord</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 3: Final Q&A & Sign-Off</h3>
-            <div class="script-quote">
-              "Do you have any questions about commands, SOPs, or escalation procedures before we finish your training?"
-            </div>
-            <label class="check-item"><input type="checkbox"> Answer trainee questions</label>
-            <label class="check-item"><input type="checkbox"> Update trainee roles in Discord</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 4: Moderation Commands & Tools</h3>
-            <div class="script-quote">
-              "Staff members must understand the available moderation commands and use them responsibly. Never use commands for personal reasons or outside your authority."
-            </div>
-            <label class="check-item"><input type="checkbox"> Demonstrate spectate and teleport commands</label>
-            <label class="check-item"><input type="checkbox"> Review warn, kick, and ban commands</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 5: Punishment Guidelines</h3>
-            <div class="script-quote">
-              "All punishments must be fair, reasonable, and supported by evidence. Staff members should follow the punishment guidelines and avoid unnecessary disciplinary actions."
-            </div>
-            <label class="check-item"><input type="checkbox"> Review punishment guidelines and severity levels</label>
-            <label class="check-item"><input type="checkbox"> Explain when to issue warnings, kicks, or bans</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 6: Discord Documentation & Logging</h3>
-            <div class="script-quote">
-              "Proper documentation is essential to maintaining accountability. All moderation actions must be recorded in the appropriate staff channels."
-            </div>
-            <label class="check-item"><input type="checkbox"> Demonstrate how to submit a moderation log</label>
-            <label class="check-item"><input type="checkbox"> Review incident reports and evidence submissions</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 7: Staff Conduct & Professionalism</h3>
-            <div class="script-quote">
-              "As a representative of FSRP, you are expected to maintain professionalism both in-game and in Discord. Your behavior reflects on the entire staff team."
-            </div>
-            <label class="check-item"><input type="checkbox"> Review staff conduct and professionalism expectations</label>
-            <label class="check-item"><input type="checkbox"> Explain conflicts of interest and permission abuse</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 8: Escalation Procedures & Teamwork</h3>
-            <div class="script-quote">
-              "Not every situation should be handled independently. Staff members must understand when to request assistance from Management or Administration."
-            </div>
-            <label class="check-item"><input type="checkbox"> Explain when to escalate a situation to higher staff</label>
-            <label class="check-item"><input type="checkbox"> Review staff communication and chain of command</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <div class="module">
-            <h3>Module 9: Scenario-Based Assessment</h3>
-            <div class="script-quote">
-              "You will now be presented with realistic moderation scenarios. Explain how you would handle each situation using FSRP policies and procedures."
-            </div>
-            <label class="check-item"><input type="checkbox"> Explain how to handle an RDM report</label>
-            <label class="check-item"><input type="checkbox"> Explain how to handle disrespect toward staff</label>
-            <label class="check-item"><input type="checkbox"> Explain what to do when witnessing staff misconduct</label>
-            <label class="check-item"><input type="checkbox"> Verify Trainee Has a Decent Understanding of This Section</label>
-          </div>
-
-          <button type="button" id="end-session-btn" class="btn-primary full mt-16">Finish Session & Log Results</button>
         </div>
       </div>
 
@@ -1012,7 +778,7 @@
           <h2>Recent Activity</h2>
           <button type="button" id="refresh-activity-btn" class="btn-small">Refresh</button>
         </div>
-        <p class="subtitle">Latest moderation logs and training sessions.</p>
+        <p class="subtitle">Latest moderation logs.</p>
 
         <div class="table-wrap mt-12">
           <table>
@@ -1054,11 +820,6 @@
     thumbnails: 'https://thumbnails.roproxy.com'
   };
 
-  const TRAINING_TYPES = [
-    'Entry Moderator Training',
-    'Support Training'
-  ];
-
   // Ordered from highest rank to lowest
   const RANK_ROLES = [
     { id: '1566965345904894042', name: 'Server Lead' },
@@ -1077,10 +838,7 @@
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   let currentInstructor = { username: 'Instructor', rank: 'Staff', discordId: null };
-  let selectedTrainees = [];
-  let activeSessionType = '';
   let currentPlayer = null; // { id, name, displayName }
-  const MAX_TRAINEES = 4;
 
   // ==========================================
   // 3. DOM REFERENCES
@@ -1106,11 +864,7 @@
     const target = document.getElementById(`view-${viewName}`);
     if (target) target.classList.add('active');
 
-    // Reset training to setup when switching away and back
-    if (viewName === 'training') {
-      document.getElementById('training-setup').classList.remove('hidden');
-      document.getElementById('training-guide').classList.add('hidden');
-    }
+    if (viewName === 'activity') loadActivity();
   }
 
   document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -1122,214 +876,7 @@
   });
 
   // ==========================================
-  // 5. TRAINING LOGIC
-  // ==========================================
-  const trainingSelect = document.getElementById('training-type-select');
-  const traineeInput = document.getElementById('trainee-input');
-  const addTraineeBtn = document.getElementById('add-trainee-btn');
-  const selectedPills = document.getElementById('selected-pills');
-  const traineeCountBadge = document.getElementById('trainee-count');
-  const setupError = document.getElementById('setup-error');
-  const confirmStartBtn = document.getElementById('confirm-start-btn');
-  const activeSessionInfo = document.getElementById('active-session-info');
-
-  TRAINING_TYPES.forEach(type => {
-    const opt = document.createElement('option');
-    opt.value = type;
-    opt.textContent = type;
-    trainingSelect.appendChild(opt);
-  });
-
-  function renderTraineePills() {
-    traineeCountBadge.textContent = `${selectedTrainees.length} / ${MAX_TRAINEES} Added`;
-    addTraineeBtn.disabled = selectedTrainees.length >= MAX_TRAINEES;
-    traineeInput.disabled = selectedTrainees.length >= MAX_TRAINEES;
-    traineeInput.placeholder = selectedTrainees.length >= MAX_TRAINEES
-      ? 'Maximum of 4 trainees reached'
-      : 'Type Discord username and press Enter...';
-
-    selectedPills.innerHTML = '';
-    selectedTrainees.forEach(name => {
-      const pill = document.createElement('span');
-      pill.className = 'pill';
-      pill.innerHTML = `${name} <button type="button" title="Remove">&times;</button>`;
-      pill.querySelector('button').onclick = () => {
-        selectedTrainees = selectedTrainees.filter(t => t !== name);
-        setupError.style.display = 'none';
-        renderTraineePills();
-      };
-      selectedPills.appendChild(pill);
-    });
-  }
-
-  function handleAddTrainee() {
-    setupError.style.display = 'none';
-    const rawName = traineeInput.value.trim().replace(/^@/, '');
-    if (!rawName) return;
-
-    if (selectedTrainees.length >= MAX_TRAINEES) {
-      setupError.textContent = `You can only add up to ${MAX_TRAINEES} trainees per session.`;
-      setupError.style.display = 'block';
-      return;
-    }
-    if (selectedTrainees.some(t => t.toLowerCase() === rawName.toLowerCase())) {
-      setupError.textContent = `"${rawName}" is already added.`;
-      setupError.style.display = 'block';
-      return;
-    }
-
-    selectedTrainees.push(rawName);
-    traineeInput.value = '';
-    renderTraineePills();
-  }
-
-  addTraineeBtn.onclick = handleAddTrainee;
-  traineeInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleAddTrainee();
-    }
-  });
-
-  document.getElementById('cancel-training-btn').onclick = () => showView('dashboard');
-
-  // Start session
-  confirmStartBtn.onclick = async () => {
-    if (traineeInput.value.trim() && selectedTrainees.length < MAX_TRAINEES) {
-      handleAddTrainee();
-    }
-    if (selectedTrainees.length === 0) {
-      setupError.textContent = 'Please enter at least 1 trainee username.';
-      setupError.style.display = 'block';
-      return;
-    }
-
-    const selectedType = trainingSelect.value;
-    confirmStartBtn.disabled = true;
-    confirmStartBtn.textContent = 'Starting...';
-    setupError.style.display = 'none';
-
-    const payload = {
-      username: 'FSRP Staff Training Logs',
-      avatar_url: 'https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png',
-      embeds: [{
-        title: '📋 New Staff Training Session Started',
-        color: 33535,
-        fields: [
-          { name: 'Training Instructor', value: `**${currentInstructor.rank}** — \`${currentInstructor.username}\``, inline: true },
-          { name: 'Training Type', value: selectedType, inline: true },
-          { name: `Trainees (${selectedTrainees.length}/${MAX_TRAINEES})`, value: selectedTrainees.map((t, i) => `${i + 1}. \`${t}\``).join('\n'), inline: false }
-        ],
-        footer: { text: 'Florida State Roleplay • Staff Panel' },
-        timestamp: new Date().toISOString()
-      }]
-    };
-
-    try {
-      const res = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error(`Webhook ${res.status}`);
-
-      activeSessionType = selectedType;
-      activeSessionInfo.innerHTML = `
-        <div><strong>Training:</strong> ${selectedType}</div>
-        <div><strong>Instructor:</strong> ${currentInstructor.rank} ${currentInstructor.username}</div>
-        <div style="width:100%;"><strong>Trainees:</strong> ${selectedTrainees.join(', ')}</div>
-      `;
-
-      document.getElementById('training-setup').classList.add('hidden');
-      document.getElementById('training-guide').classList.remove('hidden');
-    } catch (err) {
-      console.error(err);
-      setupError.textContent = 'Failed to send session log. Please try again.';
-      setupError.style.display = 'block';
-    } finally {
-      confirmStartBtn.disabled = false;
-      confirmStartBtn.textContent = 'Start New Session';
-    }
-  };
-
-  // End session
-  document.getElementById('end-session-btn').onclick = async () => {
-    const endBtn = document.getElementById('end-session-btn');
-    endBtn.disabled = true;
-    endBtn.textContent = 'Logging results...';
-
-    const checklistItems = [];
-    document.querySelectorAll('#training-guide .check-item').forEach(label => {
-      const cb = label.querySelector('input[type="checkbox"]');
-      checklistItems.push({ text: label.textContent.trim(), checked: !!(cb && cb.checked) });
-    });
-
-    const completedCount = checklistItems.filter(i => i.checked).length;
-    const totalCount = checklistItems.length;
-    const allComplete = completedCount === totalCount && totalCount > 0;
-    const checklistValue = checklistItems.length === 0
-      ? '_No checklist items_'
-      : checklistItems.map(i => `${i.checked ? '✅' : '❌'} ${i.text}`).join('\n');
-
-    // Discord webhook
-    const payload = {
-      username: 'FSRP Staff Training Logs',
-      avatar_url: 'https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png',
-      embeds: [{
-        title: allComplete ? '✅ Staff Training Session Completed' : '📋 Staff Training Session Finished',
-        color: allComplete ? 5763719 : 16753920,
-        fields: [
-          { name: 'Training Instructor', value: `**${currentInstructor.rank}** — \`${currentInstructor.username}\``, inline: true },
-          { name: 'Training Type', value: activeSessionType || '—', inline: true },
-          { name: 'Completion', value: `**${completedCount} / ${totalCount}** checklist items`, inline: true },
-          { name: `Trainees (${selectedTrainees.length})`, value: selectedTrainees.length ? selectedTrainees.map((t, i) => `${i + 1}. \`${t}\``).join('\n') : '_None_', inline: false },
-          { name: 'Checklist Results', value: checklistValue, inline: false }
-        ],
-        footer: { text: 'Florida State Roleplay • Staff Panel' },
-        timestamp: new Date().toISOString()
-      }]
-    };
-
-    try {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      console.error(err);
-    }
-
-    // Save to Supabase
-    try {
-      await supabase.from('training_sessions').insert({
-        instructor_discord_id: currentInstructor.discordId,
-        instructor_username: currentInstructor.username,
-        instructor_rank: currentInstructor.rank,
-        training_type: activeSessionType,
-        trainees: selectedTrainees,
-        checklist: checklistItems,
-        completed_count: completedCount,
-        total_count: totalCount
-      });
-    } catch (err) {
-      console.error('Supabase training insert failed', err);
-    }
-
-    // Reset
-    document.querySelectorAll('#training-guide input[type="checkbox"]').forEach(cb => cb.checked = false);
-    activeSessionType = '';
-    selectedTrainees = [];
-    renderTraineePills();
-    endBtn.disabled = false;
-    endBtn.textContent = 'Finish Session & Log Results';
-    document.getElementById('training-guide').classList.add('hidden');
-    document.getElementById('training-setup').classList.remove('hidden');
-    showView('dashboard');
-  };
-
-  // ==========================================
-  // 6. ROBLOX PLAYER LOOKUP
+  // 5. ROBLOX PLAYER LOOKUP
   // ==========================================
   const playerSearchInput = document.getElementById('player-search-input');
   const playerSearchBtn = document.getElementById('player-search-btn');
@@ -1505,7 +1052,7 @@
   };
 
   // ==========================================
-  // 7. MODERATION LOG
+  // 6. MODERATION LOG
   // ==========================================
   document.getElementById('submit-mod-btn').onclick = async () => {
     const username = document.getElementById('mod-player-username').value.trim();
@@ -1597,53 +1144,32 @@
   };
 
   // ==========================================
-  // 8. ACTIVITY FEED
+  // 7. ACTIVITY FEED
   // ==========================================
   async function loadActivity() {
     const tbody = document.getElementById('activity-tbody');
     tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">Loading...</td></tr>';
 
     try {
-      const [mods, trains] = await Promise.all([
-        supabase.from('mod_logs').select('*').order('created_at', { ascending: false }).limit(25),
-        supabase.from('training_sessions').select('*').order('created_at', { ascending: false }).limit(15)
-      ]);
+      const { data, error } = await supabase
+        .from('mod_logs')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(40);
 
-      const rows = [];
+      if (error) throw error;
 
-      (mods.data || []).forEach(m => {
-        rows.push({
-          type: m.action.toUpperCase(),
-          details: `<strong>${escapeHtml(m.player_username || 'Unknown')}</strong> — ${escapeHtml(m.reason || '').slice(0, 80)}${(m.reason || '').length > 80 ? '…' : ''}`,
-          staff: `${m.instructor_rank || ''} ${m.instructor_username || ''}`,
-          time: new Date(m.created_at).toLocaleString(),
-          ts: new Date(m.created_at).getTime()
-        });
-      });
-
-      (trains.data || []).forEach(t => {
-        rows.push({
-          type: 'TRAINING',
-          details: `${escapeHtml(t.training_type || 'Session')} — ${(t.trainees || []).join(', ')}`,
-          staff: `${t.instructor_rank || ''} ${t.instructor_username || ''}`,
-          time: new Date(t.created_at).toLocaleString(),
-          ts: new Date(t.created_at).getTime()
-        });
-      });
-
-      rows.sort((a, b) => b.ts - a.ts);
-
-      if (rows.length === 0) {
+      if (!data || data.length === 0) {
         tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">No activity yet.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = rows.slice(0, 30).map(r => `
+      tbody.innerHTML = data.map(m => `
         <tr>
-          <td><span class="meta-chip">${r.type}</span></td>
-          <td>${r.details}</td>
-          <td>${escapeHtml(r.staff)}</td>
-          <td style="white-space:nowrap;font-size:0.8rem;color:#94a3b8;">${r.time}</td>
+          <td><span class="meta-chip">${(m.action || 'LOG').toUpperCase()}</span></td>
+          <td><strong>${escapeHtml(m.player_username || 'Unknown')}</strong> — ${escapeHtml(m.reason || '').slice(0, 80)}${(m.reason || '').length > 80 ? '…' : ''}</td>
+          <td>${escapeHtml((m.instructor_rank || '') + ' ' + (m.instructor_username || ''))}</td>
+          <td style="white-space:nowrap;font-size:0.8rem;color:#94a3b8;">${new Date(m.created_at).toLocaleString()}</td>
         </tr>
       `).join('');
     } catch (err) {
@@ -1654,15 +1180,8 @@
 
   document.getElementById('refresh-activity-btn').onclick = loadActivity;
 
-  // Auto-load when switching to activity
-  const origShowView = showView;
-  showView = function(viewName) {
-    origShowView(viewName);
-    if (viewName === 'activity') loadActivity();
-  };
-
   // ==========================================
-  // 9. AUTH
+  // 8. AUTH
   // ==========================================
   function typeWelcomeMessage(fullMessage) {
     welcomeBanner.style.display = 'block';
@@ -1734,7 +1253,7 @@
             userNameDisplay.textContent = discordUsername;
             typeWelcomeMessage(`Welcome, ${matchedRank.name} ${discordUsername}`);
           } else {
-            loginStatus.innerText = 'Access Denied: This panel is restricted to Staff Instructors only.';
+            loginStatus.innerText = 'Access Denied: This panel is restricted to Staff only.';
           }
         } else {
           loginStatus.innerText = 'Access Denied: You must be in the Florida State Roleplay Discord server.';
