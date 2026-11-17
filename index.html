@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Inter', sans-serif;
       background: #030611;
@@ -20,594 +19,322 @@
       overflow-x: hidden;
       position: relative;
     }
-
-    /* Ambient Blue Background Glows */
     .bg-glow {
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
+      position: fixed; width: 500px; height: 500px; border-radius: 50%;
       background: radial-gradient(circle, rgba(0, 130, 255, 0.18) 0%, rgba(0,0,0,0) 70%);
-      top: -100px;
-      left: -100px;
-      z-index: 0;
-      pointer-events: none;
+      top: -100px; left: -100px; z-index: 0; pointer-events: none;
       animation: float 12s ease-in-out infinite alternate;
     }
-
     .bg-glow-2 {
-      position: fixed;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
+      position: fixed; width: 450px; height: 450px; border-radius: 50%;
       background: radial-gradient(circle, rgba(0, 130, 255, 0.12) 0%, rgba(0,0,0,0) 70%);
-      bottom: -100px;
-      right: -100px;
-      z-index: 0;
-      pointer-events: none;
+      bottom: -100px; right: -100px; z-index: 0; pointer-events: none;
       animation: float 10s ease-in-out infinite alternate-reverse;
     }
-
-    /* Main Container */
     .app-container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      position: relative; z-index: 1; width: 100%; max-width: 1100px;
+      display: flex; flex-direction: column; gap: 16px;
     }
-
-    /* Top Bar */
     .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       background: rgba(10, 15, 30, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(0, 130, 255, 0.25);
-      border-radius: 16px;
-      padding: 14px 20px;
+      border-radius: 16px; padding: 14px 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .brand { display: flex; align-items: center; gap: 12px; }
     .brand-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       border: 2px solid rgba(0, 130, 255, 0.5);
-      overflow: hidden;
-      background: #000;
+      overflow: hidden; background: #000;
     }
-
-    .brand-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-
+    .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-text { display: flex; flex-direction: column; }
     .brand-text strong {
-      font-size: 0.95rem;
-      font-weight: 700;
+      font-size: 0.95rem; font-weight: 700;
       background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
     .brand-text span {
-      font-size: 0.7rem;
-      color: #0082ff;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 0.7rem; color: #0082ff; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
     }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .user-info { display: flex; align-items: center; gap: 12px; }
     .user-badge {
       background: rgba(0, 130, 255, 0.12);
       border: 1px solid rgba(0, 130, 255, 0.35);
-      color: #60a5fa;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      color: #60a5fa; font-size: 0.75rem; font-weight: 700;
+      padding: 5px 12px; border-radius: 999px;
+      text-transform: uppercase; letter-spacing: 0.05em;
     }
-
     .btn-small {
       background: rgba(3, 7, 18, 0.8);
       border: 1px solid rgba(0, 130, 255, 0.25);
-      color: #94a3b8;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 7px 14px;
-      border-radius: 8px;
-      cursor: pointer;
+      color: #94a3b8; font-family: 'Inter', sans-serif;
+      font-size: 0.8rem; font-weight: 600;
+      padding: 7px 14px; border-radius: 8px; cursor: pointer;
       transition: all 0.2s ease;
     }
-
     .btn-small:hover {
-      border-color: #0082ff;
-      color: #ffffff;
+      border-color: #0082ff; color: #ffffff;
       background: rgba(0, 130, 255, 0.12);
     }
-
-    /* Navigation */
     .nav-bar {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      display: flex; gap: 8px; flex-wrap: wrap;
       background: rgba(10, 15, 30, 0.7);
       border: 1px solid rgba(0, 130, 255, 0.2);
-      border-radius: 14px;
-      padding: 10px;
+      border-radius: 14px; padding: 10px;
     }
-
     .nav-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: #94a3b8;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 9px 16px;
-      border-radius: 10px;
-      cursor: pointer;
+      background: transparent; border: 1px solid transparent;
+      color: #94a3b8; font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      padding: 9px 16px; border-radius: 10px; cursor: pointer;
       transition: all 0.2s ease;
     }
-
-    .nav-btn:hover {
-      color: #ffffff;
-      background: rgba(0, 130, 255, 0.1);
-    }
-
+    .nav-btn:hover { color: #ffffff; background: rgba(0, 130, 255, 0.1); }
     .nav-btn.active {
       background: rgba(0, 130, 255, 0.18);
-      border-color: rgba(0, 130, 255, 0.45);
-      color: #ffffff;
+      border-color: rgba(0, 130, 255, 0.45); color: #ffffff;
     }
-
-    /* Content Card */
     .card {
       background: rgba(10, 15, 30, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(0, 130, 255, 0.25);
-      padding: 28px;
-      border-radius: 20px;
+      padding: 28px; border-radius: 20px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(0, 130, 255, 0.2);
       animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    /* Login specific */
-    .login-card {
-      max-width: 480px;
-      margin: 60px auto 0;
-      text-align: center;
-    }
-
+    .login-card { max-width: 480px; margin: 60px auto 0; text-align: center; }
     .icon-badge {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 18px auto;
-      border-radius: 50%;
-      border: 2px solid rgba(0, 130, 255, 0.5);
+      width: 72px; height: 72px; margin: 0 auto 18px;
+      border-radius: 50%; border: 2px solid rgba(0, 130, 255, 0.5);
       box-shadow: 0 0 25px rgba(0, 130, 255, 0.4);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
       background: #000;
     }
-
-    .icon-badge img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
+    .icon-badge img { width: 100%; height: 100%; object-fit: cover; }
     .brand-sub {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #0082ff;
-      margin-bottom: 6px;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; color: #0082ff; margin-bottom: 6px;
     }
-
     h1 {
-      font-size: 1.65rem;
-      font-weight: 800;
-      margin-bottom: 8px;
+      font-size: 1.65rem; font-weight: 800; margin-bottom: 8px;
       background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       letter-spacing: -0.02em;
     }
-
-    h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #e2e8f0;
-    }
-
-    .subtitle {
-      color: #94a3b8;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      margin-bottom: 24px;
-    }
-
-    /* Buttons */
+    h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; color: #e2e8f0; }
+    .subtitle { color: #94a3b8; font-size: 0.92rem; line-height: 1.5; margin-bottom: 24px; }
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       background: rgba(0, 130, 255, 0.18);
       border: 1px solid rgba(0, 130, 255, 0.55);
-      border-radius: 12px;
-      padding: 13px 24px;
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.92rem;
-      cursor: pointer;
+      border-radius: 12px; padding: 13px 24px;
+      color: #ffffff; font-family: 'Inter', sans-serif;
+      font-weight: 600; font-size: 0.92rem; cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 130, 255, 0.2);
     }
-
     .btn-primary:hover:not(:disabled) {
-      border-color: #0082ff;
-      background: rgba(0, 130, 255, 0.32);
+      border-color: #0082ff; background: rgba(0, 130, 255, 0.32);
       transform: translateY(-2px);
       box-shadow: 0 6px 25px rgba(0, 130, 255, 0.38);
     }
-
-    .btn-primary:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-primary.full { width: 100%; }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fca5a5;
     }
-
-    .btn-primary.full {
-      width: 100%;
+    .btn-danger:hover:not(:disabled) {
+      background: rgba(239, 68, 68, 0.28); border-color: #ef4444;
     }
-
-    /* Forms */
-    .form-group {
-      margin-bottom: 18px;
-      text-align: left;
+    .btn-success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      color: #86efac;
     }
-
+    .btn-success:hover:not(:disabled) {
+      background: rgba(34, 197, 94, 0.28); border-color: #22c55e;
+    }
+    .form-group { margin-bottom: 18px; text-align: left; }
     .form-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #93c5fd;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; font-weight: 700; color: #93c5fd;
+      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
     }
-
     select, input[type="text"], input[type="number"], textarea {
-      width: 100%;
-      background: #060b19;
+      width: 100%; background: #060b19;
       border: 1px solid rgba(0, 130, 255, 0.3);
-      border-radius: 10px;
-      padding: 12px 14px;
-      color: #f2f3f5;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.92rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 10px; padding: 12px 14px;
+      color: #f2f3f5; font-family: 'Inter', sans-serif; font-size: 0.92rem;
+      outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-
     select:focus, input:focus, textarea:focus {
-      border-color: #0082ff;
-      box-shadow: 0 0 0 3px rgba(0, 130, 255, 0.18);
+      border-color: #0082ff; box-shadow: 0 0 0 3px rgba(0, 130, 255, 0.18);
     }
-
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 10px;
-    }
-
+    textarea { min-height: 90px; resize: vertical; }
+    .input-row { display: flex; gap: 10px; }
     .btn-add {
       background: rgba(0, 130, 255, 0.2);
       border: 1px solid rgba(0, 130, 255, 0.5);
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 0 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s ease;
+      color: #ffffff; font-family: 'Inter', sans-serif;
+      font-weight: 600; font-size: 0.9rem;
+      padding: 0 18px; border-radius: 10px; cursor: pointer;
+      white-space: nowrap; transition: all 0.2s ease;
     }
-
     .btn-add:hover:not(:disabled) {
-      background: rgba(0, 130, 255, 0.35);
-      border-color: #0082ff;
+      background: rgba(0, 130, 255, 0.35); border-color: #0082ff;
     }
-
-    .btn-add:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    /* Grid helpers */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
+    .btn-add:disabled { opacity: 0.45; cursor: not-allowed; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media (max-width: 700px) {
       .grid-2 { grid-template-columns: 1fr; }
       .nav-bar { justify-content: center; }
     }
-
-    /* Modules / Cards inside */
     .module {
       background: rgba(3, 7, 18, 0.8);
       border: 1px solid rgba(0, 130, 255, 0.2);
       border-left: 3px solid #0082ff;
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin-bottom: 14px;
-      text-align: left;
+      border-radius: 12px; padding: 18px 20px;
+      margin-bottom: 14px; text-align: left;
     }
-
-    /* Player result card */
     .player-card {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
+      display: flex; gap: 20px; align-items: flex-start;
       background: rgba(3, 7, 18, 0.75);
       border: 1px solid rgba(0, 130, 255, 0.22);
-      border-radius: 14px;
-      padding: 20px;
-      margin-top: 16px;
+      border-radius: 14px; padding: 20px; margin-top: 16px;
     }
-
     .player-avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 16px;
+      width: 110px; height: 110px; border-radius: 16px;
       border: 2px solid rgba(0, 130, 255, 0.4);
-      background: #000;
-      overflow: hidden;
-      flex-shrink: 0;
+      background: #000; overflow: hidden; flex-shrink: 0;
     }
-
-    .player-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .player-meta h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .player-meta .username {
-      color: #60a5fa;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
-
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
+    .player-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .player-meta h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+    .player-meta .username { color: #60a5fa; font-size: 0.9rem; margin-bottom: 10px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
     .meta-chip {
       background: rgba(0, 130, 255, 0.12);
       border: 1px solid rgba(0, 130, 255, 0.3);
-      color: #93c5fd;
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 999px;
+      color: #93c5fd; font-size: 0.78rem; font-weight: 600;
+      padding: 4px 10px; border-radius: 999px;
     }
-
-    /* Tables */
     .table-wrap {
-      overflow-x: auto;
-      border-radius: 12px;
+      overflow-x: auto; border-radius: 12px;
       border: 1px solid rgba(0, 130, 255, 0.2);
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     th {
-      text-align: left;
-      padding: 12px 14px;
+      text-align: left; padding: 12px 14px;
       background: rgba(0, 130, 255, 0.1);
-      color: #93c5fd;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.04em;
+      color: #93c5fd; font-weight: 700;
+      text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.04em;
     }
-
     td {
       padding: 12px 14px;
       border-top: 1px solid rgba(0, 130, 255, 0.1);
       color: #cbd5e1;
     }
-
-    tr:hover td {
-      background: rgba(0, 130, 255, 0.05);
-    }
-
-    /* Status messages */
-    .error-msg {
-      color: #ff6b6b;
-      font-size: 0.84rem;
-      margin-top: 8px;
-      display: none;
-    }
-
-    .success-msg {
-      color: #4ade80;
-      font-size: 0.84rem;
-      margin-top: 8px;
-      display: none;
-    }
-
-    .status-text {
-      color: #94a3b8;
-      font-size: 0.9rem;
-      margin-bottom: 16px;
-    }
-
-    /* Welcome banner */
+    tr:hover td { background: rgba(0, 130, 255, 0.05); }
+    .error-msg { color: #ff6b6b; font-size: 0.84rem; margin-top: 8px; display: none; }
+    .success-msg { color: #4ade80; font-size: 0.84rem; margin-top: 8px; display: none; }
+    .status-text { color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px; }
     #welcome-banner {
-      display: none;
-      font-size: 1.25rem;
-      font-weight: 800;
-      margin-bottom: 18px;
+      display: none; font-size: 1.25rem; font-weight: 800; margin-bottom: 18px;
       background: linear-gradient(90deg, #ffffff, #0082ff, #93c5fd, #ffffff);
       background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: shimmer 3s linear infinite;
     }
-
     .cursor {
-      display: inline-block;
-      width: 3px;
-      height: 1.1rem;
-      background-color: #0082ff;
-      margin-left: 4px;
-      vertical-align: middle;
+      display: inline-block; width: 3px; height: 1.1rem;
+      background-color: #0082ff; margin-left: 4px; vertical-align: middle;
       animation: blink 0.8s infinite;
     }
-
-    /* Views */
-    .view-section {
-      display: none;
-      animation: fadeSlideUp 0.4s ease-out forwards;
-    }
-
-    .view-section.active {
-      display: block;
-    }
-
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: #64748b;
-    }
-
-    .empty-state p {
-      margin-top: 8px;
-      font-size: 0.9rem;
-    }
-
-    /* Quick actions */
+    .view-section { display: none; animation: fadeSlideUp 0.4s ease-out forwards; }
+    .view-section.active { display: block; }
+    .empty-state { text-align: center; padding: 40px 20px; color: #64748b; }
+    .empty-state p { margin-top: 8px; font-size: 0.9rem; }
     .quick-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px; margin-top: 18px;
     }
-
     .quick-card {
       background: rgba(3, 7, 18, 0.7);
       border: 1px solid rgba(0, 130, 255, 0.2);
-      border-radius: 12px;
-      padding: 18px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      border-radius: 12px; padding: 18px 16px;
+      text-align: center; cursor: pointer; transition: all 0.2s ease;
     }
-
     .quick-card:hover {
       border-color: rgba(0, 130, 255, 0.5);
       background: rgba(0, 130, 255, 0.1);
       transform: translateY(-2px);
     }
-
-    .quick-card strong {
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-      color: #e2e8f0;
+    .quick-card strong { display: block; font-size: 0.95rem; margin-bottom: 4px; color: #e2e8f0; }
+    .quick-card span { font-size: 0.78rem; color: #94a3b8; }
+    .shift-status {
+      background: rgba(3, 7, 18, 0.8);
+      border: 1px solid rgba(0, 130, 255, 0.25);
+      border-radius: 14px; padding: 24px;
+      text-align: center; margin-bottom: 20px;
     }
-
-    .quick-card span {
-      font-size: 0.78rem;
-      color: #94a3b8;
+    .shift-status .status-label {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 8px;
     }
-
-    /* Animations */
+    .shift-status .status-value { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
+    .shift-status .status-value.on { color: #4ade80; }
+    .shift-status .status-value.off { color: #94a3b8; }
+    .shift-timer {
+      font-size: 2rem; font-weight: 800; color: #60a5fa;
+      font-variant-numeric: tabular-nums; margin: 12px 0;
+    }
+    .server-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px; margin-bottom: 20px;
+    }
+    .stat-box {
+      background: rgba(3, 7, 18, 0.75);
+      border: 1px solid rgba(0, 130, 255, 0.2);
+      border-radius: 12px; padding: 16px; text-align: center;
+    }
+    .stat-box .num { font-size: 1.5rem; font-weight: 800; color: #60a5fa; }
+    .stat-box .label {
+      font-size: 0.75rem; color: #94a3b8; margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .team-tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 6px;
+      background: rgba(0, 130, 255, 0.15); color: #93c5fd;
+    }
     @keyframes scaleUp {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-
     @keyframes fadeSlideUp {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes shimmer {
       0% { background-position: 0% center; }
       100% { background-position: 200% center; }
     }
-
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
-
     @keyframes float {
       0% { transform: translate(0, 0); }
       100% { transform: translate(30px, 30px); }
     }
-
-    /* Utility */
     .hidden { display: none !important; }
     .mt-12 { margin-top: 12px; }
     .mt-16 { margin-top: 16px; }
@@ -615,11 +342,8 @@
     .mb-8 { margin-bottom: 8px; }
     .text-center { text-align: center; }
     .flex-between {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; flex-wrap: wrap;
     }
   </style>
 </head>
@@ -627,11 +351,10 @@
   <div class="bg-glow"></div>
   <div class="bg-glow-2"></div>
 
-  <!-- ===================== LOGIN VIEW ===================== -->
   <div id="login-view" class="app-container">
     <div class="card login-card">
       <div class="icon-badge">
-        <img src="https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png" alt="Florida State Roleplay Logo">
+        <img src="https://i.postimg.cc/fLDqFCgj/933343108c74cc3d661798cd4ebca0d9.png" alt="Logo">
       </div>
       <div class="brand-sub">Florida State Roleplay</div>
       <h1>Staff Panel</h1>
@@ -640,9 +363,7 @@
     </div>
   </div>
 
-  <!-- ===================== MAIN APP (after login) ===================== -->
   <div id="app-view" class="app-container hidden">
-    <!-- Top Bar -->
     <div class="top-bar">
       <div class="brand">
         <div class="brand-logo">
@@ -660,54 +381,103 @@
       </div>
     </div>
 
-    <!-- Navigation -->
     <div class="nav-bar">
       <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+      <button class="nav-btn" data-view="shifts">Shifts</button>
+      <button class="nav-btn" data-view="erlc">ERLC Live</button>
       <button class="nav-btn" data-view="player">Player Lookup</button>
       <button class="nav-btn" data-view="modlog">Moderation Log</button>
       <button class="nav-btn" data-view="activity">Activity</button>
     </div>
 
-    <!-- Content Card -->
     <div class="card">
       <!-- DASHBOARD -->
       <div id="view-dashboard" class="view-section active">
         <div id="welcome-banner"><span id="welcome-text"></span><span class="cursor"></span></div>
-        <p class="status-text">Select a tool below to look up players or log moderation actions.</p>
-
+        <p class="status-text">Select a tool below.</p>
         <div class="quick-grid">
-          <div class="quick-card" data-goto="player">
-            <strong>Player Lookup</strong>
-            <span>Search Roblox users</span>
-          </div>
-          <div class="quick-card" data-goto="modlog">
-            <strong>Log Action</strong>
-            <span>Warn / Kick / Ban / Note</span>
-          </div>
-          <div class="quick-card" data-goto="activity">
-            <strong>View Activity</strong>
-            <span>Recent moderation logs</span>
+          <div class="quick-card" data-goto="shifts"><strong>Shifts</strong><span>Clock in / out</span></div>
+          <div class="quick-card" data-goto="erlc"><strong>ERLC Live</strong><span>Players & commands</span></div>
+          <div class="quick-card" data-goto="player"><strong>Player Lookup</strong><span>Search Roblox users</span></div>
+          <div class="quick-card" data-goto="modlog"><strong>Log Action</strong><span>Warn / Kick / Ban</span></div>
+          <div class="quick-card" data-goto="activity"><strong>Activity</strong><span>Recent logs</span></div>
+        </div>
+      </div>
+
+      <!-- SHIFTS -->
+      <div id="view-shifts" class="view-section">
+        <h2>Staff Shifts</h2>
+        <p class="subtitle">Clock in when you start your shift. Clock out when you're done.</p>
+        <div class="shift-status">
+          <div class="status-label">Current Status</div>
+          <div class="status-value off" id="shift-status-text">Off Duty</div>
+          <div class="shift-timer" id="shift-timer">00:00:00</div>
+          <div class="flex-between" style="justify-content:center;gap:12px;margin-top:16px;">
+            <button id="clock-in-btn" class="btn-primary btn-success">Clock In</button>
+            <button id="clock-out-btn" class="btn-primary btn-danger" disabled>Clock Out</button>
           </div>
         </div>
+        <div class="flex-between mb-8">
+          <h3 style="font-size:1rem;color:#93c5fd;">Your Recent Shifts</h3>
+          <button id="refresh-shifts-btn" class="btn-small">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Started</th><th>Ended</th><th>Duration</th></tr></thead>
+            <tbody id="shifts-tbody">
+              <tr><td colspan="3" class="text-center" style="padding:24px;color:#64748b;">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ERLC LIVE -->
+      <div id="view-erlc" class="view-section">
+        <div class="flex-between mb-8">
+          <div>
+            <h2>ERLC Live Server</h2>
+            <p class="subtitle" style="margin-bottom:0;">Live players and commands</p>
+          </div>
+          <button id="refresh-erlc-btn" class="btn-small">Refresh</button>
+        </div>
+        <div id="erlc-error" class="error-msg" style="display:none;"></div>
+        <div class="server-stats" id="erlc-stats">
+          <div class="stat-box"><div class="num" id="stat-players">—</div><div class="label">Players</div></div>
+          <div class="stat-box"><div class="num" id="stat-max">—</div><div class="label">Max</div></div>
+          <div class="stat-box"><div class="num" id="stat-name">—</div><div class="label">Server</div></div>
+        </div>
+        <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Players In-Game</h3>
+        <div class="table-wrap" style="margin-bottom:20px;">
+          <table>
+            <thead><tr><th>Player</th><th>Team</th><th>Callsign</th><th>Permission</th></tr></thead>
+            <tbody id="erlc-players-tbody">
+              <tr><td colspan="4" class="text-center" style="padding:24px;color:#64748b;">Click Refresh to load</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Run Command</h3>
+        <p class="subtitle" style="font-size:0.85rem;margin-bottom:12px;">Runs as virtual server management. Use carefully.</p>
+        <div class="input-row">
+          <input type="text" id="erlc-command-input" placeholder=":h Hello everyone!  or  :m message">
+          <button id="erlc-run-btn" class="btn-add">Run</button>
+        </div>
+        <p class="success-msg" id="erlc-cmd-success"></p>
+        <p class="error-msg" id="erlc-cmd-error"></p>
       </div>
 
       <!-- PLAYER LOOKUP -->
       <div id="view-player" class="view-section">
         <h2>Roblox Player Lookup</h2>
-        <p class="subtitle">Search a player by Roblox username to view their profile, groups, and add staff notes.</p>
-
+        <p class="subtitle">Search a player by Roblox username.</p>
         <div class="input-row">
           <input type="text" id="player-search-input" placeholder="Enter Roblox username..." autocomplete="off">
           <button type="button" id="player-search-btn" class="btn-add">Search</button>
         </div>
         <p class="error-msg" id="player-error"></p>
         <p class="success-msg" id="player-success"></p>
-
         <div id="player-result" class="hidden">
           <div class="player-card">
-            <div class="player-avatar">
-              <img id="player-avatar-img" src="" alt="Avatar">
-            </div>
+            <div class="player-avatar"><img id="player-avatar-img" src="" alt="Avatar"></div>
             <div class="player-meta">
               <h3 id="player-display-name">—</h3>
               <div class="username" id="player-username">@username</div>
@@ -718,18 +488,14 @@
               <div class="meta-row" id="player-groups-row"></div>
             </div>
           </div>
-
           <div class="mt-20">
             <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Add Staff Note</h3>
             <textarea id="note-input" placeholder="Write a note about this player..."></textarea>
             <button type="button" id="save-note-btn" class="btn-primary mt-12">Save Note</button>
           </div>
-
           <div class="mt-20">
             <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Previous Notes</h3>
-            <div id="notes-list">
-              <div class="empty-state"><p>No notes yet for this player.</p></div>
-            </div>
+            <div id="notes-list"><div class="empty-state"><p>No notes yet for this player.</p></div></div>
           </div>
         </div>
       </div>
@@ -737,8 +503,7 @@
       <!-- MODERATION LOG -->
       <div id="view-modlog" class="view-section">
         <h2>Log Moderation Action</h2>
-        <p class="subtitle">Record a warn, kick, ban, or note. This posts to Discord and saves to the database.</p>
-
+        <p class="subtitle">Record a warn, kick, ban, or note.</p>
         <div class="grid-2">
           <div class="form-group">
             <label class="form-label">Player Roblox Username</label>
@@ -755,20 +520,16 @@
             </select>
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label">Duration (optional)</label>
           <input type="text" id="mod-duration" placeholder="e.g. 1 day, 7 days, Permanent">
         </div>
-
         <div class="form-group">
           <label class="form-label">Reason</label>
           <textarea id="mod-reason" placeholder="Explain the reason and any evidence..."></textarea>
         </div>
-
         <p class="error-msg" id="mod-error"></p>
         <p class="success-msg" id="mod-success"></p>
-
         <button type="button" id="submit-mod-btn" class="btn-primary full mt-12">Submit Log</button>
       </div>
 
@@ -779,17 +540,9 @@
           <button type="button" id="refresh-activity-btn" class="btn-small">Refresh</button>
         </div>
         <p class="subtitle">Latest moderation logs.</p>
-
         <div class="table-wrap mt-12">
           <table>
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Details</th>
-                <th>Staff</th>
-                <th>Time</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Type</th><th>Details</th><th>Staff</th><th>Time</th></tr></thead>
             <tbody id="activity-tbody">
               <tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">Loading...</td></tr>
             </tbody>
@@ -805,22 +558,22 @@
   // ==========================================
   // 1. CONFIGURATION  ← EDIT THESE
   // ==========================================
-  const SUPABASE_URL = 'https://upffwblcowuftbbgnfsv.supabase.co';
+  const SUPABASE_URL = 'https://upffwblcowuftbbgnfsv.supabase.co/';
   const SUPABASE_ANON_KEY = 'sb_publishable_ILuvzVH2gJRSlaRaDfnU8Q_iQ4uqEm2';
   const GUILD_ID = '1428115068297412742';
   const WEBHOOK_URL = 'https://discord.com/api/webhooks/1572066357816594492/6fX_jOdnMhTZ5Lav8zdU1YQMT4bFbKbvL2iEysxDkvdbTstSvBnzOkLcZdstKHurA0CM';
 
-  // Optional: Your main Roblox group ID (shows rank if player is in it)
-  const ROBLOX_GROUP_ID = null; // e.g. 12345678
+  // ERLC Private Server API key (in-game Settings → ER:LC API)
+  const ERLC_SERVER_KEY = 'hkklSMrjkCAzvGoUDTtk-tGnnIhSnbCVrvHVdHyAsETkFsKRdsTjWoQBkORvu'; // ← PUT YOUR KEY HERE
 
-  // Roblox API proxy (public). Alternatives: ff-roproxy.com, rotunnel.com
+  const ROBLOX_GROUP_ID = null;
+
   const RBX_PROXY = {
     users: 'https://users.roproxy.com',
     groups: 'https://groups.roproxy.com',
     thumbnails: 'https://thumbnails.roproxy.com'
   };
 
-  // Ordered from highest rank to lowest
   const RANK_ROLES = [
     { id: '1566965345904894042', name: 'Server Lead' },
     { id: '1428115068494807345', name: 'Owner' },
@@ -833,16 +586,14 @@
   ];
 
   // ==========================================
-  // 2. APP STATE & CLIENT
+  // 2. STATE
   // ==========================================
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   let currentInstructor = { username: 'Instructor', rank: 'Staff', discordId: null };
-  let currentPlayer = null; // { id, name, displayName }
+  let currentPlayer = null;
+  let activeShift = null;
+  let shiftTimerInterval = null;
 
-  // ==========================================
-  // 3. DOM REFERENCES
-  // ==========================================
   const loginView = document.getElementById('login-view');
   const appView = document.getElementById('app-view');
   const loginStatus = document.getElementById('login-status');
@@ -854,7 +605,7 @@
   const welcomeText = document.getElementById('welcome-text');
 
   // ==========================================
-  // 4. VIEW MANAGEMENT
+  // 3. VIEW MANAGEMENT
   // ==========================================
   function showView(viewName) {
     document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -863,20 +614,240 @@
     });
     const target = document.getElementById(`view-${viewName}`);
     if (target) target.classList.add('active');
-
     if (viewName === 'activity') loadActivity();
+    if (viewName === 'shifts') { loadActiveShift(); loadShiftHistory(); }
+    if (viewName === 'erlc') loadERLC();
   }
 
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => showView(btn.dataset.view));
   });
-
   document.querySelectorAll('.quick-card').forEach(card => {
     card.addEventListener('click', () => showView(card.dataset.goto));
   });
 
   // ==========================================
-  // 5. ROBLOX PLAYER LOOKUP
+  // 4. SHIFTS
+  // ==========================================
+  function formatDuration(ms) {
+    const totalSec = Math.floor(ms / 1000);
+    const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+    const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+    const s = String(totalSec % 60).padStart(2, '0');
+    return `${h}:${m}:${s}`;
+  }
+
+  function startShiftTimer(clockInIso) {
+    if (shiftTimerInterval) clearInterval(shiftTimerInterval);
+    const start = new Date(clockInIso).getTime();
+    const update = () => {
+      document.getElementById('shift-timer').textContent = formatDuration(Date.now() - start);
+    };
+    update();
+    shiftTimerInterval = setInterval(update, 1000);
+  }
+
+  function stopShiftTimer() {
+    if (shiftTimerInterval) clearInterval(shiftTimerInterval);
+    shiftTimerInterval = null;
+    document.getElementById('shift-timer').textContent = '00:00:00';
+  }
+
+  async function loadActiveShift() {
+    const statusText = document.getElementById('shift-status-text');
+    const clockInBtn = document.getElementById('clock-in-btn');
+    const clockOutBtn = document.getElementById('clock-out-btn');
+    try {
+      const { data, error } = await supabase
+        .from('shifts')
+        .select('*')
+        .eq('discord_id', currentInstructor.discordId)
+        .is('clock_out', null)
+        .order('clock_in', { ascending: false })
+        .limit(1);
+      if (error) throw error;
+      if (data && data.length > 0) {
+        activeShift = data[0];
+        statusText.textContent = 'On Duty';
+        statusText.className = 'status-value on';
+        clockInBtn.disabled = true;
+        clockOutBtn.disabled = false;
+        startShiftTimer(activeShift.clock_in);
+      } else {
+        activeShift = null;
+        statusText.textContent = 'Off Duty';
+        statusText.className = 'status-value off';
+        clockInBtn.disabled = false;
+        clockOutBtn.disabled = true;
+        stopShiftTimer();
+      }
+    } catch (err) { console.error(err); }
+  }
+
+  async function loadShiftHistory() {
+    const tbody = document.getElementById('shifts-tbody');
+    try {
+      const { data, error } = await supabase
+        .from('shifts')
+        .select('*')
+        .eq('discord_id', currentInstructor.discordId)
+        .order('clock_in', { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" class="text-center" style="padding:24px;color:#64748b;">No shifts yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.map(s => {
+        const start = new Date(s.clock_in);
+        const end = s.clock_out ? new Date(s.clock_out) : null;
+        const dur = end ? formatDuration(end - start) : 'In progress';
+        return `<tr><td>${start.toLocaleString()}</td><td>${end ? end.toLocaleString() : '—'}</td><td>${dur}</td></tr>`;
+      }).join('');
+    } catch (err) {
+      console.error(err);
+      tbody.innerHTML = '<tr><td colspan="3" class="text-center" style="padding:24px;color:#ff6b6b;">Failed to load.</td></tr>';
+    }
+  }
+
+  document.getElementById('clock-in-btn').onclick = async () => {
+    try {
+      const { data, error } = await supabase.from('shifts').insert({
+        discord_id: currentInstructor.discordId,
+        username: currentInstructor.username,
+        rank: currentInstructor.rank,
+        clock_in: new Date().toISOString()
+      }).select().single();
+      if (error) throw error;
+      activeShift = data;
+      document.getElementById('shift-status-text').textContent = 'On Duty';
+      document.getElementById('shift-status-text').className = 'status-value on';
+      document.getElementById('clock-in-btn').disabled = true;
+      document.getElementById('clock-out-btn').disabled = false;
+      startShiftTimer(activeShift.clock_in);
+      loadShiftHistory();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to clock in. Make sure the shifts table exists in Supabase.');
+    }
+  };
+
+  document.getElementById('clock-out-btn').onclick = async () => {
+    if (!activeShift) return;
+    try {
+      const { error } = await supabase.from('shifts').update({ clock_out: new Date().toISOString() }).eq('id', activeShift.id);
+      if (error) throw error;
+      activeShift = null;
+      document.getElementById('shift-status-text').textContent = 'Off Duty';
+      document.getElementById('shift-status-text').className = 'status-value off';
+      document.getElementById('clock-in-btn').disabled = false;
+      document.getElementById('clock-out-btn').disabled = true;
+      stopShiftTimer();
+      loadShiftHistory();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to clock out.');
+    }
+  };
+
+  document.getElementById('refresh-shifts-btn').onclick = () => { loadActiveShift(); loadShiftHistory(); };
+
+  // ==========================================
+  // 5. ERLC API
+  // ==========================================
+  async function erlcFetch(path, options = {}) {
+    if (!ERLC_SERVER_KEY) throw new Error('ERLC_SERVER_KEY is not set in the config.');
+    const res = await fetch(`https://api.erlc.gg${path}`, {
+      ...options,
+      headers: {
+        'server-key': ERLC_SERVER_KEY,
+        'Content-Type': 'application/json',
+        ...(options.headers || {})
+      }
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`ERLC API ${res.status}: ${text}`);
+    }
+    return res.json();
+  }
+
+  async function loadERLC() {
+    const errEl = document.getElementById('erlc-error');
+    errEl.style.display = 'none';
+    if (!ERLC_SERVER_KEY) {
+      errEl.textContent = 'Set ERLC_SERVER_KEY in the config section of index.html first.';
+      errEl.style.display = 'block';
+      return;
+    }
+    try {
+      let data;
+      try {
+        data = await erlcFetch('/v2/server?Players=true');
+      } catch {
+        const players = await erlcFetch('/v1/server/players');
+        data = { CurrentPlayers: players.length, MaxPlayers: '—', Name: 'Server', Players: players };
+      }
+      document.getElementById('stat-players').textContent = data.CurrentPlayers ?? data.Players?.length ?? '—';
+      document.getElementById('stat-max').textContent = data.MaxPlayers ?? '—';
+      document.getElementById('stat-name').textContent = data.Name || data.JoinKey || '—';
+
+      const tbody = document.getElementById('erlc-players-tbody');
+      const players = data.Players || [];
+      if (!players.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:24px;color:#64748b;">No players online or server offline.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = players.map(p => {
+        const name = (p.Player || '').split(':')[0] || p.Player || 'Unknown';
+        const team = p.Team || '—';
+        const callsign = p.Callsign || '—';
+        const perm = p.Permission || '—';
+        return `<tr>
+          <td><strong>${escapeHtml(name)}</strong></td>
+          <td><span class="team-tag">${escapeHtml(team)}</span></td>
+          <td>${escapeHtml(callsign)}</td>
+          <td style="font-size:0.8rem;color:#94a3b8;">${escapeHtml(perm)}</td>
+        </tr>`;
+      }).join('');
+    } catch (err) {
+      console.error(err);
+      errEl.textContent = err.message || 'Failed to load ERLC data.';
+      errEl.style.display = 'block';
+    }
+  }
+
+  document.getElementById('refresh-erlc-btn').onclick = loadERLC;
+
+  document.getElementById('erlc-run-btn').onclick = async () => {
+    const input = document.getElementById('erlc-command-input');
+    const cmd = input.value.trim();
+    const successEl = document.getElementById('erlc-cmd-success');
+    const errorEl = document.getElementById('erlc-cmd-error');
+    successEl.style.display = 'none';
+    errorEl.style.display = 'none';
+    if (!cmd) {
+      errorEl.textContent = 'Enter a command first.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    try {
+      await erlcFetch('/v2/server/command', {
+        method: 'POST',
+        body: JSON.stringify({ command: cmd })
+      });
+      successEl.textContent = 'Command sent successfully.';
+      successEl.style.display = 'block';
+      input.value = '';
+    } catch (err) {
+      console.error(err);
+      errorEl.textContent = err.message || 'Failed to run command.';
+      errorEl.style.display = 'block';
+    }
+  };
+
+  // ==========================================
+  // 6. ROBLOX PLAYER LOOKUP
   // ==========================================
   const playerSearchInput = document.getElementById('player-search-input');
   const playerSearchBtn = document.getElementById('player-search-btn');
@@ -890,80 +861,57 @@
     playerSuccess.style.display = 'none';
     playerResult.classList.add('hidden');
     currentPlayer = null;
-
     if (!username) {
       playerError.textContent = 'Enter a Roblox username.';
       playerError.style.display = 'block';
       return;
     }
-
     playerSearchBtn.disabled = true;
     playerSearchBtn.textContent = 'Searching...';
-
     try {
-      // Username → ID
       const lookupRes = await fetch(`${RBX_PROXY.users}/v1/usernames/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usernames: [username], excludeBannedUsers: false })
       });
       const lookupData = await lookupRes.json();
-      if (!lookupData.data || lookupData.data.length === 0) {
-        throw new Error('User not found.');
-      }
-
+      if (!lookupData.data || lookupData.data.length === 0) throw new Error('User not found.');
       const user = lookupData.data[0];
       const userId = user.id;
-
-      // Full user info
       const infoRes = await fetch(`${RBX_PROXY.users}/v1/users/${userId}`);
       const info = await infoRes.json();
-
-      // Avatar
       let avatarUrl = '';
       try {
         const thumbRes = await fetch(`${RBX_PROXY.thumbnails}/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=false`);
         const thumbData = await thumbRes.json();
-        if (thumbData.data && thumbData.data[0]) {
-          avatarUrl = thumbData.data[0].imageUrl;
-        }
+        if (thumbData.data?.[0]) avatarUrl = thumbData.data[0].imageUrl;
       } catch (_) {}
-
-      // Groups
       let groupsHtml = '';
       try {
         const groupsRes = await fetch(`${RBX_PROXY.groups}/v1/users/${userId}/groups/roles`);
         const groupsData = await groupsRes.json();
-        if (groupsData.data && groupsData.data.length) {
+        if (groupsData.data?.length) {
           const relevant = ROBLOX_GROUP_ID
             ? groupsData.data.filter(g => g.group.id === ROBLOX_GROUP_ID)
             : groupsData.data.slice(0, 6);
-
           groupsHtml = relevant.map(g => {
             const isMain = ROBLOX_GROUP_ID && g.group.id === ROBLOX_GROUP_ID;
             return `<span class="meta-chip" style="${isMain ? 'border-color:#0082ff;color:#60a5fa;' : ''}">${g.group.name} — ${g.role.name}</span>`;
           }).join('');
         }
       } catch (_) {}
-
-      currentPlayer = {
-        id: userId,
-        name: info.name || user.name,
-        displayName: info.displayName || user.displayName
-      };
-
-      document.getElementById('player-avatar-img').src = avatarUrl || 'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-00000000000000000000000000000000-Png/150/150/AvatarHeadshot/Png/noFilter';
+      currentPlayer = { id: userId, name: info.name || user.name, displayName: info.displayName || user.displayName };
+      document.getElementById('player-avatar-img').src = avatarUrl || '';
       document.getElementById('player-display-name').textContent = currentPlayer.displayName;
       document.getElementById('player-username').textContent = `@${currentPlayer.name}`;
       document.getElementById('player-id-chip').textContent = `ID: ${userId}`;
       document.getElementById('player-created-chip').textContent = `Joined: ${info.created ? new Date(info.created).toLocaleDateString() : '—'}`;
       document.getElementById('player-groups-row').innerHTML = groupsHtml || '<span class="meta-chip">No groups found</span>';
-
       playerResult.classList.remove('hidden');
       loadPlayerNotes(userId);
     } catch (err) {
       console.error(err);
-      playerError.textContent = err.message || 'Failed to look up player. Try again or check the username.';
+      playerError.textContent = err.message || 'Failed to look up player.';
       playerError.style.display = 'block';
     } finally {
       playerSearchBtn.disabled = false;
@@ -973,32 +921,19 @@
 
   playerSearchBtn.onclick = searchPlayer;
   playerSearchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      searchPlayer();
-    }
+    if (e.key === 'Enter') { e.preventDefault(); searchPlayer(); }
   });
 
-  // Notes
   async function loadPlayerNotes(robloxId) {
     const list = document.getElementById('notes-list');
     list.innerHTML = '<div class="empty-state"><p>Loading notes...</p></div>';
-
     try {
-      const { data, error } = await supabase
-        .from('player_notes')
-        .select('*')
-        .eq('player_roblox_id', robloxId)
-        .order('created_at', { ascending: false })
-        .limit(20);
-
+      const { data, error } = await supabase.from('player_notes').select('*').eq('player_roblox_id', robloxId).order('created_at', { ascending: false }).limit(20);
       if (error) throw error;
-
-      if (!data || data.length === 0) {
+      if (!data?.length) {
         list.innerHTML = '<div class="empty-state"><p>No notes yet for this player.</p></div>';
         return;
       }
-
       list.innerHTML = data.map(n => `
         <div class="module" style="margin-bottom:10px;">
           <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
@@ -1006,8 +941,7 @@
             <span style="font-size:0.75rem;color:#64748b;">${new Date(n.created_at).toLocaleString()}</span>
           </div>
           <p style="font-size:0.9rem;color:#e2e8f0;line-height:1.45;">${escapeHtml(n.note)}</p>
-        </div>
-      `).join('');
+        </div>`).join('');
     } catch (err) {
       console.error(err);
       list.innerHTML = '<div class="empty-state"><p>Could not load notes.</p></div>';
@@ -1018,18 +952,8 @@
     const noteText = document.getElementById('note-input').value.trim();
     playerError.style.display = 'none';
     playerSuccess.style.display = 'none';
-
-    if (!currentPlayer) {
-      playerError.textContent = 'Search a player first.';
-      playerError.style.display = 'block';
-      return;
-    }
-    if (!noteText) {
-      playerError.textContent = 'Note cannot be empty.';
-      playerError.style.display = 'block';
-      return;
-    }
-
+    if (!currentPlayer) { playerError.textContent = 'Search a player first.'; playerError.style.display = 'block'; return; }
+    if (!noteText) { playerError.textContent = 'Note cannot be empty.'; playerError.style.display = 'block'; return; }
     try {
       const { error } = await supabase.from('player_notes').insert({
         player_roblox_id: currentPlayer.id,
@@ -1039,7 +963,6 @@
         author_username: currentInstructor.username
       });
       if (error) throw error;
-
       document.getElementById('note-input').value = '';
       playerSuccess.textContent = 'Note saved.';
       playerSuccess.style.display = 'block';
@@ -1052,7 +975,7 @@
   };
 
   // ==========================================
-  // 6. MODERATION LOG
+  // 7. MODERATION LOG
   // ==========================================
   document.getElementById('submit-mod-btn').onclick = async () => {
     const username = document.getElementById('mod-player-username').value.trim();
@@ -1062,19 +985,15 @@
     const modError = document.getElementById('mod-error');
     const modSuccess = document.getElementById('mod-success');
     const submitBtn = document.getElementById('submit-mod-btn');
-
     modError.style.display = 'none';
     modSuccess.style.display = 'none';
-
     if (!username || !reason) {
       modError.textContent = 'Player username and reason are required.';
       modError.style.display = 'block';
       return;
     }
-
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
-
     let robloxId = null;
     try {
       const lookupRes = await fetch(`${RBX_PROXY.users}/v1/usernames/users`, {
@@ -1083,12 +1002,8 @@
         body: JSON.stringify({ usernames: [username], excludeBannedUsers: false })
       });
       const lookupData = await lookupRes.json();
-      if (lookupData.data && lookupData.data[0]) {
-        robloxId = lookupData.data[0].id;
-      }
+      if (lookupData.data?.[0]) robloxId = lookupData.data[0].id;
     } catch (_) {}
-
-    // Discord webhook
     const colorMap = { warn: 16776960, kick: 16753920, ban: 15548997, softban: 15105570, note: 5793266 };
     const payload = {
       username: 'FSRP Moderation Logs',
@@ -1107,18 +1022,9 @@
         timestamp: new Date().toISOString()
       }]
     };
-
     try {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      console.error('Webhook failed', err);
-    }
-
-    // Supabase
+      await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    } catch (err) { console.error('Webhook failed', err); }
     try {
       await supabase.from('mod_logs').insert({
         instructor_discord_id: currentInstructor.discordId,
@@ -1126,14 +1032,10 @@
         instructor_rank: currentInstructor.rank,
         player_roblox_id: robloxId,
         player_username: username,
-        action,
-        reason,
+        action, reason,
         duration: duration || null
       });
-    } catch (err) {
-      console.error('Supabase mod log failed', err);
-    }
-
+    } catch (err) { console.error('Supabase mod log failed', err); }
     modSuccess.textContent = 'Action logged successfully.';
     modSuccess.style.display = 'block';
     document.getElementById('mod-player-username').value = '';
@@ -1144,44 +1046,34 @@
   };
 
   // ==========================================
-  // 7. ACTIVITY FEED
+  // 8. ACTIVITY
   // ==========================================
   async function loadActivity() {
     const tbody = document.getElementById('activity-tbody');
     tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">Loading...</td></tr>';
-
     try {
-      const { data, error } = await supabase
-        .from('mod_logs')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(40);
-
+      const { data, error } = await supabase.from('mod_logs').select('*').order('created_at', { ascending: false }).limit(40);
       if (error) throw error;
-
-      if (!data || data.length === 0) {
+      if (!data?.length) {
         tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#64748b;">No activity yet.</td></tr>';
         return;
       }
-
       tbody.innerHTML = data.map(m => `
         <tr>
           <td><span class="meta-chip">${(m.action || 'LOG').toUpperCase()}</span></td>
           <td><strong>${escapeHtml(m.player_username || 'Unknown')}</strong> — ${escapeHtml(m.reason || '').slice(0, 80)}${(m.reason || '').length > 80 ? '…' : ''}</td>
           <td>${escapeHtml((m.instructor_rank || '') + ' ' + (m.instructor_username || ''))}</td>
           <td style="white-space:nowrap;font-size:0.8rem;color:#94a3b8;">${new Date(m.created_at).toLocaleString()}</td>
-        </tr>
-      `).join('');
+        </tr>`).join('');
     } catch (err) {
       console.error(err);
       tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:30px;color:#ff6b6b;">Failed to load activity.</td></tr>';
     }
   }
-
   document.getElementById('refresh-activity-btn').onclick = loadActivity;
 
   // ==========================================
-  // 8. AUTH
+  // 9. AUTH + HELPERS
   // ==========================================
   function typeWelcomeMessage(fullMessage) {
     welcomeBanner.style.display = 'block';
@@ -1196,11 +1088,7 @@
 
   function escapeHtml(str) {
     if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   loginBtn.onclick = async () => {
@@ -1219,25 +1107,20 @@
     window.location.href = window.location.origin + window.location.pathname;
   };
 
-  // Check session on load
   const { data: { session } } = await supabase.auth.getSession();
-
   if (session) {
     if (!session.provider_token) {
       await supabase.auth.signOut();
       loginStatus.innerText = 'Your session expired. Please log in with Discord again.';
     } else {
       loginStatus.innerText = 'Verifying your Staff credentials...';
-
       try {
         const res = await fetch(`https://discord.com/api/users/@me/guilds/${GUILD_ID}/member`, {
           headers: { Authorization: `Bearer ${session.provider_token}` }
         });
-
         if (res.ok) {
           const member = await res.json();
           const matchedRank = RANK_ROLES.find(rank => member.roles.includes(rank.id));
-
           if (matchedRank) {
             const discordUsername = member.user?.username || member.nick || 'Instructor';
             currentInstructor = {
@@ -1245,8 +1128,6 @@
               rank: matchedRank.name,
               discordId: member.user?.id || session.user?.id
             };
-
-            // Show app
             loginView.classList.add('hidden');
             appView.classList.remove('hidden');
             userRankBadge.textContent = matchedRank.name;
