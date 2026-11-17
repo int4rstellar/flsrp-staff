@@ -455,14 +455,16 @@
             </tbody>
           </table>
         </div>
-        <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Run Command</h3>
-        <p class="subtitle" style="font-size:0.85rem;margin-bottom:12px;">Runs as virtual server management. Use carefully.</p>
-        <div class="input-row">
-          <input type="text" id="erlc-command-input" placeholder=":h Hello everyone!  or  :m message">
-          <button id="erlc-run-btn" class="btn-add">Run</button>
+        <div id="erlc-command-section" style="display:none;">
+          <h3 style="font-size:1rem;color:#93c5fd;margin-bottom:10px;">Run Command</h3>
+          <p class="subtitle" style="font-size:0.85rem;margin-bottom:12px;">Runs as virtual server management. Restricted role only.</p>
+          <div class="input-row">
+            <input type="text" id="erlc-command-input" placeholder=":h Hello everyone!  or  :m message">
+            <button id="erlc-run-btn" class="btn-add">Run</button>
+          </div>
+          <p class="success-msg" id="erlc-cmd-success"></p>
+          <p class="error-msg" id="erlc-cmd-error"></p>
         </div>
-        <p class="success-msg" id="erlc-cmd-success"></p>
-        <p class="error-msg" id="erlc-cmd-error"></p>
       </div>
 
       <!-- PLAYER LOOKUP -->
@@ -565,6 +567,9 @@
 
   const ROBLOX_GROUP_ID = null;
 
+  // Only this Discord role can use the ERLC "Run Command" feature
+  const COMMAND_ROLE_ID = '1571928425361575946';
+
   const RBX_PROXY = {
     users: 'https://users.roproxy.com',
     groups: 'https://groups.roproxy.com',
@@ -586,7 +591,7 @@
   // 2. STATE
   // ==========================================
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  let currentInstructor = { username: 'Instructor', rank: 'Staff', discordId: null };
+  let currentInstructor = { username: 'Instructor', rank: 'Staff', discordId: null, roles: [] };
   let currentPlayer = null;
   let activeShift = null;
   let shiftTimerInterval = null;
@@ -750,34 +755,29 @@
   document.getElementById('refresh-shifts-btn').onclick = () => { loadActiveShift(); loadShiftHistory(); };
 
   // ==========================================
-  // 5. ERLC API
+  // 5. ERLC API (via Supabase Edge Function proxy)
   // ==========================================
-async function erlcFetch(path, options = {}) {
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/erlc-proxy`, {
-    method: options.method || "GET",
-    headers: {
-      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-      "Content-Type": "application/json",
-      "x-path": path,
-    },
-    body: options.body || undefined,
-  });
+  async function erlcFetch(path, options = {}) {
+    const res = await fetch(`${SUPABASE_URL.replace(/\/$/, '')}/functions/v1/erlc-proxy`, {
+      method: options.method || 'GET',
+      headers: {
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'x-path': path,
+      },
+      body: options.body || undefined,
+    });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`ERLC Proxy ${res.status}: ${text}`);
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`ERLC Proxy ${res.status}: ${text}`);
+    }
+    return res.json();
   }
-  return res.json();
-}
 
   async function loadERLC() {
     const errEl = document.getElementById('erlc-error');
     errEl.style.display = 'none';
-    if (!ERLC_SERVER_KEY) {
-      errEl.textContent = 'Set ERLC_SERVER_KEY in the config section of index.html first.';
-      errEl.style.display = 'block';
-      return;
-    }
     try {
       let data;
       try {
@@ -824,6 +824,14 @@ async function erlcFetch(path, options = {}) {
     const errorEl = document.getElementById('erlc-cmd-error');
     successEl.style.display = 'none';
     errorEl.style.display = 'none';
+
+    // Only the allowed role can run commands
+    if (!currentInstructor.roles.includes(COMMAND_ROLE_ID)) {
+      errorEl.textContent = 'You do not have permission to run commands.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
     if (!cmd) {
       errorEl.textContent = 'Enter a command first.';
       errorEl.style.display = 'block';
@@ -1124,13 +1132,21 @@ async function erlcFetch(path, options = {}) {
             currentInstructor = {
               username: discordUsername,
               rank: matchedRank.name,
-              discordId: member.user?.id || session.user?.id
+              discordId: member.user?.id || session.user?.id,
+              roles: member.roles || []
             };
             loginView.classList.add('hidden');
             appView.classList.remove('hidden');
             userRankBadge.textContent = matchedRank.name;
             userNameDisplay.textContent = discordUsername;
             typeWelcomeMessage(`Welcome, ${matchedRank.name} ${discordUsername}`);
+
+            // Only show Run Command if user has the special role
+            const canRunCommands = currentInstructor.roles.includes(COMMAND_ROLE_ID);
+            const cmdSection = document.getElementById('erlc-command-section');
+            if (cmdSection) {
+              cmdSection.style.display = canRunCommands ? 'block' : 'none';
+            }
           } else {
             loginStatus.innerText = 'Access Denied: This panel is restricted to Staff only.';
           }
